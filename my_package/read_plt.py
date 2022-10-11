@@ -152,5 +152,5 @@ def read_plt(filename):
 
         points = np.array(points).reshape(24, -1).transpose()
         corners = np.array(corners, dtype=int).reshape(-1, 4)
-        return points, corners
+        return points, corners, aux
 
