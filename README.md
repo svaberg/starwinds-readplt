@@ -1,3 +1,5 @@
+[![Python package](https://github.com/svaberg/starwinds-readplt/actions/workflows/python-package.yml/badge.svg)](https://github.com/svaberg/starwinds-readplt/actions/workflows/python-package.yml)
+
 ## Installation
 To install 
 ```
