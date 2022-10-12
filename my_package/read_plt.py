@@ -25,7 +25,6 @@ def read_plt(filename):
             return content[0:null_loc:4].decode('ascii')
 
         title = readstr32(content[ptr:])
-        #print(f"Title: {title}.")
         ptr += len(title) * 4 + 4
 
         # Read number of variables
@@ -33,19 +32,19 @@ def read_plt(filename):
         #print(f"Number of variables {num_vars}.")
         ptr += 4
 
+        variables = []
         for vid in range(num_vars):
             vname = readstr32(content[ptr:])
             ptr += len(vname) * 4 + 4
 
-
-        # 
-        # import pdb; pdb.set_trace()
-
+            variables.append(vname)
 
         zone_marker = struct.pack('f', 299.0)
         ptr = content.find(zone_marker)
-        #print(f"Zone data at {hex(ptr)}.")
+        ptr += 4
+        assert ptr % 4 == 0
 
+        # Read zone name
         zone_name = readstr32(content[ptr:])
         ptr += len(zone_name) * 4 + 4
 
@@ -104,6 +103,8 @@ def read_plt(filename):
             val = readstr32(content[ptr:])
             ptr += len(val) * 4 + 4
 
+            val = val.strip()
+
             aux[key] = val
             #print(f"\"{key}\"=\"{val}\"")
 
@@ -112,10 +113,7 @@ def read_plt(filename):
         # Now look for the end of header
         eoh_marker = struct.pack('f', 357.0)
         eoh_loc = content.find(eoh_marker)
-
-        ptr = eoh_loc + 1
-        ptr = math.ceil(ptr/4)*4
-        #print(f"End of header at {hex(eoh_loc)}.")
+        ptr += 4
 
         assert (content[ptr:ptr+4] == zone_marker)
         ptr += 4
@@ -152,5 +150,5 @@ def read_plt(filename):
 
         points = np.array(points).reshape(24, -1).transpose()
         corners = np.array(corners, dtype=int).reshape(-1, 4)
-        return points, corners, aux
+        return points, corners, aux, title, variables, zone_name
 
