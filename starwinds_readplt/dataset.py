@@ -5,6 +5,7 @@ from starwinds_readplt.read_plt import read_plt
 import numpy as np
 from matplotlib import tri
 
+
 def auto_coords(ds):
     if np.allclose(ds.variable("X [R]"), 0):
         return "Y [R]", "Z [R]"
@@ -13,20 +14,20 @@ def auto_coords(ds):
     if np.allclose(ds.variable("Z [R]"), 0):
         return "X [R]", "Y [R]"
 
+
 def triangles(ds, uname=None, vname=None):
 
     if uname is None and vname is None:
         uname, vname = auto_coords(ds)
-    
+
     pu = ds.variable(uname)
     pv = ds.variable(vname)
 
-    triangles = np.vstack((ds.corners[:, [0, 1, 2]], ds.corners[:, [2, 3, 0]])) 
+    triangles = np.vstack((ds.corners[:, [0, 1, 2]], ds.corners[:, [2, 3, 0]]))
     return tri.Triangulation(pu, pv, triangles)
 
 
-class Dataset():
-
+class Dataset:
     def __init__(self, points, corners, aux, title, variables, zone):
         self.points = points
         self.corners = corners
