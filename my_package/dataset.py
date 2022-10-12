@@ -4,7 +4,19 @@ from my_package.read_plt import read_plt
 
 import numpy as np
 from matplotlib import tri
-def triangles(ds, uname="Y [R]", vname="Z [R]"):
+
+def auto_coords(ds):
+    if np.allclose(ds.variable("X [R]"), 0):
+        return "Y [R]", "Z [R]"
+    if np.allclose(ds.variable("Y [R]"), 0):
+        return "X [R]", "Z [R]"
+    if np.allclose(ds.variable("Z [R]"), 0):
+        return "X [R]", "Y [R]"
+
+def triangles(ds, uname=None, vname=None):
+
+    if uname is None and vname is None:
+        uname, vname = auto_coords(ds)
     
     pu = ds.variable(uname)
     pv = ds.variable(vname)
@@ -31,7 +43,6 @@ class Dataset():
             return cls.from_plt(file)
         else:
             raise ValueError(f"Unknown extension for file {file}.")
-
 
     @classmethod
     def from_dat(cls, file):

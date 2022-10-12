@@ -2,4 +2,7 @@
 name = "my_package"
 version = "0.0.1"
 description = "My package description"
+dependencies = ["python-slugify",]
 
+[project.scripts]
+sw-quick = "my_package.cli_plots:quick_plot"
