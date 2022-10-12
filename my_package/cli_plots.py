@@ -1,22 +1,24 @@
 import logging
+log = logging.getLogger(__name__)
+import argparse
+
+from slugify import slugify
+
 try:
     import coloredlogs
 except ModuleNotFoundError:
     pass
-log = logging.getLogger(__name__)
 
-import argparse
-import glob
-import re
-
-from slugify import slugify
+from . import basicplot
+plot_callback = basicplot.plot
+try:
+    from . import fancyplot
+    plot_callback = fancyplot.plot
+except ImportError:
+    pass
 
 from my_package.dataset import Dataset, auto_coords, triangles
-from my_package.quick_plots import plot
 
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import colors
 
 def quick_plot():
     parser = argparse.ArgumentParser(description='Quick plots of 2D SWMF output')
@@ -34,11 +36,12 @@ def quick_plot():
 
     args = parser.parse_args()
 
-    logging.getLogger(__package__).setLevel(args.log_level)  # Set for entire package.
+    logging.getLogger(__package__).setLevel(args.log_level)
+    logging.basicConfig(format='%(asctime)s %(name)s %(levelname)s: %(message)s', level=args.log_level)
     try:
         coloredlogs.install(args.log_level, logger=log)
         log.info("Using colorful log messages!")
-    except ModuleNotFoundError:
+    except NameError:
         pass
 
     plt_filenames = args.plt_file
@@ -56,35 +59,5 @@ def quick_plot():
 
     png_filenames = [slugify(f"ql-{f}-{w_name}") + ".png" for f in plt_filenames]
     for file, pngfile in zip(plt_filenames, png_filenames):
-        theplot(file, pngfile, args.u_name, args.v_name, args.w_name, args.wscale)
-    
-def theplot(file, pngfile, u_name, v_name, w_name, wscale):
+        plot_callback(file, pngfile, args.u_name, args.v_name, args.w_name, args.wscale)
 
-    log.info(f"Opening file {file}")
-    ds = Dataset.from_file(file)
-
-    if u_name is None and v_name is None:
-        u_name, v_name = auto_coords(ds)
-
-    tris = triangles(ds, u_name, v_name)
-
-    fig, ax = plt.subplots()
-
-    w_var = ds.variable(w_name)
-
-    if wscale == "log":
-        assert np.log10(10) == 1
-        w_var = np.log10(w_var)
-        w_name = "log10 " + w_name
-
-    img = ax.tricontourf(tris, w_var, levels=100)
-    cax = plt.colorbar(img)
-
-    ax.set_title(ds.title + "\n" + str(file) + " " + ds.zone)
-    ax.set_xlabel(u_name)
-    ax.set_ylabel(v_name)
-    ax.set_aspect("equal")
-    cax.set_label(w_name)
-    log.info(f"Saving figure {pngfile}.")
-    plt.savefig(pngfile)
-    plt.close()
