@@ -8,10 +8,7 @@ from starwinds_readplt.dataset import triangles
 import pytest
 
 
-def test_dat(script_runner):
-    ret = script_runner.run('sw-quick', 'x=0_var_2_n00000000.dat', cwd='examples')
-    assert ret.success
-
-def test_plt(script_runner):
-    ret = script_runner.run('sw-quick', 'x=0_var_2_n00000000.plt', cwd='examples')
+@pytest.mark.parametrize('ext', ('dat', 'plt'))
+def test_dat(script_runner, ext):
+    ret = script_runner.run('sw-quick', 'x=0_var_2_n00000000.' + ext, cwd='examples')
     assert ret.success
