@@ -37,3 +37,9 @@ jobs:
       - name: Test with pytest
         run: |
           pytest --cov=starwinds_readplt --cov-report=xml:pytest-cobertura.xml
+      - name: Codacy Coverage Reporter
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          # api-token: ${{ secrets.CODACY_API_TOKEN }}
+          coverage-reports: pytest-cobertura.xml
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
