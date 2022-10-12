@@ -20,8 +20,6 @@ try:
 except ImportError:
     pass
 
-from starwinds_readplt.dataset import Dataset, auto_coords, triangles
-
 
 def quick_plot():
     parser = argparse.ArgumentParser(description="Quick plots of 2D SWMF output")
