@@ -2,7 +2,14 @@
 name = "my_package"
 version = "0.0.1"
 description = "My package description"
-dependencies = ["python-slugify",]
+dependencies = ["numpy", "matplotlib", "python-slugify",]
+
+[build-system]
+requires = ["versioneer", "setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+tests = ["pytest", ]
 
 [project.scripts]
 sw-quick = "my_package.cli_plots:quick_plot"
