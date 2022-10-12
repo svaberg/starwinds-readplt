@@ -1,5 +1,5 @@
-from my_package.read_dat import read_dat
-from my_package.read_plt import read_plt
+from starwinds_readplt.read_dat import read_dat
+from starwinds_readplt.read_plt import read_plt
 
 
 import numpy as np

@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from slugify import slugify
 
-from my_package.dataset import Dataset, auto_coords, triangles
+from starwinds_readplt.dataset import Dataset, auto_coords, triangles
 
 
 def plot(file, pngfile, u_name, v_name, w_name, wscale):

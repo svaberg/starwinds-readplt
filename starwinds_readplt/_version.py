@@ -46,7 +46,7 @@ def get_config():
     cfg.style = "pep440"
     cfg.tag_prefix = ""
     cfg.parentdir_prefix = ""
-    cfg.versionfile_source = "my_package/_version.py"
+    cfg.versionfile_source = "starwinds_readplt/_version.py"
     cfg.verbose = False
     return cfg
 

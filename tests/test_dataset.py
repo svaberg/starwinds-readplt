@@ -1,6 +1,6 @@
 import numpy as np
-from my_package.dataset import Dataset
-from my_package.dataset import triangles
+from starwinds_readplt.dataset import Dataset
+from starwinds_readplt.dataset import triangles
 
 import pytest
 

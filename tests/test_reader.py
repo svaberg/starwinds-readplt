@@ -6,8 +6,8 @@ from matplotlib import tri
 from time import perf_counter
 from contextlib import contextmanager
 
-from my_package.read_dat import read_dat
-from my_package.read_plt import read_plt
+from starwinds_readplt.read_dat import read_dat
+from starwinds_readplt.read_plt import read_plt
 
 @contextmanager
 def catchtime() -> float:

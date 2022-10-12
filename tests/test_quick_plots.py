@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from my_package.quick_plots import plot
-from my_package.dataset import Dataset
-from my_package.dataset import triangles
+from starwinds_readplt.quick_plots import plot
+from starwinds_readplt.dataset import Dataset
+from starwinds_readplt.dataset import triangles
 
 import pytest
 

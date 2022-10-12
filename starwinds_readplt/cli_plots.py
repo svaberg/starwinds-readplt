@@ -17,7 +17,7 @@ try:
 except ImportError:
     pass
 
-from my_package.dataset import Dataset, auto_coords, triangles
+from starwinds_readplt.dataset import Dataset, auto_coords, triangles
 
 
 def quick_plot():

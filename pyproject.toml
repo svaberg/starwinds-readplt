@@ -1,5 +1,5 @@
 [project]
-name = "my_package"
+name = "starwinds_readplt"
 version = "0.0.1"
 description = "My package description"
 dependencies = ["numpy", "matplotlib", "python-slugify",]
@@ -12,4 +12,4 @@ build-backend = "setuptools.build_meta"
 tests = ["pytest", ]
 
 [project.scripts]
-sw-quick = "my_package.cli_plots:quick_plot"
+sw-quick = "starwinds_readplt.cli_plots:quick_plot"
