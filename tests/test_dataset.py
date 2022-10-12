@@ -4,26 +4,12 @@ from my_package.dataset import triangles
 
 import pytest
 
-import matplotlib.pyplot as plt
-def plot(data, triangles):    
-    fig, ax = plt.subplots()
-    img = ax.tricontourf(triangles, data, levels=100)
-    plt.colorbar(img)
-    ax.triplot(triangles, color='k', linewidth=.1)
-    return fig, ax
-
-
 def test1():
     ds = Dataset.from_dat("examples/x=0_var_2_n00000000.dat")
     y = ds.variable("Y [R]")
     z = ds.variable("Z [R]")
     rho = ds.variable("Rho [g/cm^3]")
 
-def test2():
-    ds = Dataset.from_dat("examples/x=0_var_2_n00000000.dat")
-    tris = triangles(ds)
-    plot(ds.variable("U_x [km/s]"), tris)
-    plt.show()
 
 @pytest.mark.parametrize("file", ("examples/x=0_var_2_n00000000.dat", "examples/x=0_var_2_n00000000.plt"))
 def test3(file):
