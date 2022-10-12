@@ -17,7 +17,7 @@ tag_prefix = "v"
 parentdir_prefix = ""
 
 [project.optional-dependencies]
-tests = ["pytest", ]
+tests = ["pytest", "pytest-console-scripts", ]
 
 [project.scripts]
 sw-quick = "starwinds_readplt.cli_plots:quick_plot"

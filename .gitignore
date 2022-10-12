@@ -3,3 +3,7 @@ __pycache__
 build
 
 examples
+
+.coverage
+.idea
+pytest-cobertura.xml
