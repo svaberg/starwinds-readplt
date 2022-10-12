@@ -77,7 +77,7 @@ def test1():
 
 
 def test5():
-    filename = "examples/x=0_var_1_n00000000.plt"
+    filename = "examples/x=0_var_2_n00000000.plt"
 
     with catchtime() as t:
         points, corners, *_ = read_plt(filename)
