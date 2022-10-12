@@ -1,6 +1,9 @@
 import numpy as np
 import struct
 import math
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def read_plt(filename):
@@ -30,11 +33,11 @@ def read_plt(filename):
 
         # Read number of variables
         (num_vars,) = struct.unpack("I", content[ptr : ptr + 4])
-        # print(f"Number of variables {num_vars}.")
+        log.debug(f"Number of variables {num_vars}.")
         ptr += 4
 
         variables = []
-        for vid in range(num_vars):
+        for _ in range(num_vars):
             vname = readstr32(content[ptr:])
             ptr += len(vname) * 4 + 4
 
@@ -49,7 +52,7 @@ def read_plt(filename):
         zone_name = readstr32(content[ptr:])
         ptr += len(zone_name) * 4 + 4
 
-        # print(f"Zone name: {zone_name}.")
+        log.debug(f"Zone name: {zone_name}.")
 
         assert content[ptr : ptr + 4] == struct.pack("i", -1)  # Parentzone
         ptr += 4
@@ -57,7 +60,7 @@ def read_plt(filename):
         assert content[ptr : ptr + 4] == struct.pack("i", -1)  # StrandID
         ptr += 4
 
-        (solutiontime,) = struct.unpack(f"d", content[ptr : ptr + 8])
+        (_solutiontime,) = struct.unpack("d", content[ptr : ptr + 8])
         ptr += 8
 
         ptr += 4  # Default zone color
@@ -77,13 +80,13 @@ def read_plt(filename):
         )  # Number of miscellaneous user-defined face neighbor connections
         ptr += 4
 
-        (num_points,) = struct.unpack(f"I", content[ptr : ptr + 4])
+        (num_points,) = struct.unpack("I", content[ptr : ptr + 4])
         ptr += 4
-        # print(f"Number of points: {num_points}.")
+        log.debug(f"Number of points: {num_points}.")
 
-        (num_elem,) = struct.unpack(f"I", content[ptr : ptr + 4])
+        (num_elem,) = struct.unpack("I", content[ptr : ptr + 4])
         ptr += 4
-        # print(f"Number of elements: {num_elem}.")
+        log.debug(f"Number of elements: {num_elem}.")
 
         assert content[ptr : ptr + 4] == struct.pack(
             "I", 0
@@ -100,7 +103,7 @@ def read_plt(filename):
 
         aux = dict()
         while True:
-            (aux_data,) = struct.unpack(f"I", content[ptr : ptr + 4])
+            (aux_data,) = struct.unpack("I", content[ptr : ptr + 4])
             ptr += 4
 
             if aux_data == 0:
@@ -116,11 +119,14 @@ def read_plt(filename):
             val = val.strip()
 
             aux[key] = val
-            # print(f"\"{key}\"=\"{val}\"")
+            log.debug(f"\"{key}\"=\"{val}\"")
 
         # Now look for the end of header
         eoh_marker = struct.pack("f", 357.0)
         eoh_loc = content.find(eoh_marker)
+        if eoh_loc == ptr:
+            # No gaps
+            pass
         ptr += 4
 
         assert content[ptr : ptr + 4] == zone_marker
@@ -145,12 +151,12 @@ def read_plt(filename):
         struct.unpack(f"{2*num_vars}d", content[ptr : ptr + num_bytes])
         ptr += num_bytes
 
-        # print(f"Start of point data at {hex(ptr)}.")
+        log.debug(f"Start of point data at {hex(ptr)}.")
         num_bytes = num_points * num_vars * 4
         points = struct.unpack(f"{num_bytes // 4}f", content[ptr : ptr + num_bytes])
         ptr += num_bytes
 
-        # print(f"Start of connectivity at {hex(ptr)}.")
+        log.debug(f"Start of connectivity at {hex(ptr)}.")
         num_corners = num_elem * 4
         num_bytes = num_corners * 4
         corners = struct.unpack(f"{num_bytes // 4}I", content[ptr : ptr + num_bytes])
