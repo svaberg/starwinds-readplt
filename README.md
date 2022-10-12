@@ -6,7 +6,7 @@
 
 To install 
 
-```
+```bash
 cd <project>
 pip install .
 ```
@@ -15,13 +15,13 @@ pip install .
 
 To create a single example png
 
-```
+```bash
 sw-quick x=0_var_2_n00000000.plt
 ```
 
 or several png files
 
-```
+```bash
 sw-quick x*.plt
 ```
 
@@ -29,13 +29,13 @@ sw-quick x*.plt
 
 To install the project in editable mode and enable testing do
 
-```
+```bash
 cd <project>
 pip install --editable .[tests]
 ```
 
 Now it is possible to run the test suite by typing
 
-```
+```bash
 pytest
 ```
