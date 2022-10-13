@@ -1,3 +1,5 @@
+from typing import Any
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import tri
@@ -15,7 +17,18 @@ def catchtime() -> float:
     yield lambda: perf_counter() - start
 
 
-def test_read_3d_file():
+def test_read_3d_dat():
+    filename = "examples/3d__var_1_n00000000.dat"
+    points, corners, aux, title, variables, zone_name = read_dat(filename)
+
+    assert np.min(corners) == 0
+    assert np.max(corners) + 1 == points.shape[0]
+
+    assert points.shape == (12800, 24)
+    assert corners.shape == (12288, 8)
+
+
+def test_compare_dat_and_plt():
     filename = "examples/3d__var_1_n00000000.dat"
     dpoints, dcorners, daux, dtitle, dvariables, dzone_name = read_dat(filename)
 
@@ -31,69 +44,21 @@ def test_read_3d_file():
     assert np.allclose(dcorners, corners)
 
 
-# def test2():
-#     filename = "examples/x=0_var_2_n00000000.plt"
-#     points, corners, *_ = read_plt(filename)
-
-#     u = (points[:, 4]**2 + points[:, 5]**2 + points[:, 6]**2)**.5
-#     triangles = np.vstack((corners[:, [0, 1, 2]], corners[:, [2, 3, 0]]))
-#     triang = tri.Triangulation(points[:, 1], points[:, 2], triangles)
-
-#     fig, ax = plt.subplots(figsize=(8,8))
-#     img = ax.tricontourf(triang, u, levels=100)
-#     plt.colorbar(img)
-#     ax.triplot(triang, color='k', linewidth=.1)
-#     return fig, ax
-
-
-# def test3():
-#     filename = "examples/z=0_var_3_n00000000.plt"
-#     points, corners, *_ = read_plt(filename)
-
-#     u = (points[:, 4]**2 + points[:, 5]**2 + points[:, 6]**2)**.5
-#     triangles = np.vstack((corners[:, [0, 1, 2]], corners[:, [2, 3, 0]]))
-#     triang = tri.Triangulation(points[:, 0], points[:, 1], triangles)
-
-#     fig, ax = plt.subplots(figsize=(8,8))
-#     img = ax.tricontourf(triang, u, levels=100)
-#     plt.colorbar(img)
-#     ax.triplot(triang, color='k', linewidth=.1)
-#     return fig, ax  # plt.show()
-
-
-# def test4():
-#     filename = "examples/x=0_var_2_n00009000.plt"
-#     points, corners, *_ = read_plt(filename)
-
-#     u = (points[:, 4]**2 + points[:, 5]**2 + points[:, 6]**2)**.5
-#     triangles = np.vstack((corners[:, [0, 1, 2]], corners[:, [2, 3, 0]]))
-#     triang = tri.Triangulation(points[:, 1], points[:, 2], triangles)
-
-#     fig, ax = plt.subplots(figsize=(8,8))
-#     img = ax.tricontourf(triang, u, levels=100)
-#     plt.colorbar(img)
-#     # ax.triplot(triang, color='k', linewidth=.1)
-#     return fig, ax  # plt.show()
-
-
-def test5():
-    filename = "examples/x=0_var_2_n00000000.plt"
+def test_3d_point_cloud():
+    filename = "examples/3d__var_1_n00000000.plt"
 
     with catchtime() as t:
         points, corners, *_ = read_plt(filename)
     print(f"Execution time: {t():.4f} secs")
 
-    with catchtime() as t:
-        triangles = np.vstack((corners[:, [0, 1, 2]], corners[:, [2, 3, 0]]))
-        triang = tri.Triangulation(points[:, 1], points[:, 2], triangles)
-    print(f"Execution time: {t():.4f} secs")
+    fig, axs = plt.subplots(2, 2, figsize=(8, 8))
+    x = points[:, 0]
+    y = points[:, 1]
+    z = points[:, 2]
 
-    with catchtime() as t:
-        fig, ax = plt.subplots(figsize=(8, 8))
-        u = (points[:, 4] ** 2 + points[:, 5] ** 2 + points[:, 6] ** 2) ** 0.5
-        img = ax.tricontourf(triang, u, levels=100)
-        plt.colorbar(img)
-        ax.set_aspect("equal")
-    print(f"Execution time: {t():.4f} secs")
-    # plt.show()
-    return fig, ax
+    axs[0, 0].plot(x, y, ".")
+    axs[0, 1].plot(x, z, ".")
+    axs[1, 0].plot(y, z, ".")
+    # axs[1,1].plot(x, y, ',')
+    plt.show()
+    return fig, axs
