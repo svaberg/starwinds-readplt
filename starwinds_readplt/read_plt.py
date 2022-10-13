@@ -65,8 +65,17 @@ def read_plt(filename):
 
         ptr += 4  # Default zone color
 
-        assert content[ptr : ptr + 4] == struct.pack("I", 3)  # FEQUADRILATERAL
+        # Support FEQUADRILATERAL (2D) and FEBRICK (3D) only
+        if content[ptr : ptr + 4] == struct.pack("I", 3):
+            log.debug("Found FEQUADRILATERAL zone type.")
+            num_corners_per_elem = 4
+        elif content[ptr : ptr + 4] == struct.pack("I", 5):
+            log.debug("Found FEBRICK zone type.")
+            num_corners_per_elem = 8
+        else:
+            raise ValueError(f"Unrecognized zone type.")
         ptr += 4
+        log.debug(f"Using {num_corners_per_elem} corners per element.")
 
         assert content[ptr : ptr + 4] == struct.pack("I", 0)  # Var location
         ptr += 4
@@ -157,11 +166,11 @@ def read_plt(filename):
         ptr += num_bytes
 
         log.debug(f"Start of connectivity at {hex(ptr)}.")
-        num_corners = num_elem * 4
-        num_bytes = num_corners * 4
+
+        num_bytes = num_corners_per_elem * num_elem * 4
         corners = struct.unpack(f"{num_bytes // 4}I", content[ptr : ptr + num_bytes])
         ptr += num_bytes
 
-        points = np.array(points).reshape(24, -1).transpose()
-        corners = np.array(corners, dtype=int).reshape(-1, 4)
+        points = np.array(points).reshape(len(variables), -1).transpose()
+        corners = np.array(corners, dtype=int).reshape(-1, num_corners_per_elem)
         return points, corners, aux, title, variables, zone_name
