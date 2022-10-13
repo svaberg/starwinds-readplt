@@ -101,4 +101,6 @@ def quick_plot():
 
     png_filenames = [slugify(f"ql-{f}-{args.w_name}") + ".png" for f in plt_filenames]
     for file, png_file in zip(plt_filenames, png_filenames):
-        plot_callback(file, png_file, args.u_name, args.v_name, args.w_name, args.wscale)
+        plot_callback(
+            file, png_file, args.u_name, args.v_name, args.w_name, args.wscale
+        )

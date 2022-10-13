@@ -119,7 +119,7 @@ def read_plt(filename):
             val = val.strip()
 
             aux[key] = val
-            log.debug(f"\"{key}\"=\"{val}\"")
+            log.debug(f'"{key}"="{val}"')
 
         # Now look for the end of header
         eoh_marker = struct.pack("f", 357.0)
