@@ -1,9 +1,8 @@
-from starwinds_readplt.read_dat import read_dat
-from starwinds_readplt.read_plt import read_plt
-
-
 import numpy as np
 from matplotlib import tri
+
+from starwinds_readplt.read_dat import read_dat
+from starwinds_readplt.read_plt import read_plt
 
 
 def auto_coords(ds):
@@ -16,6 +15,7 @@ def auto_coords(ds):
 
 
 def triangles(ds, uname=None, vname=None):
+    """ """
 
     if uname is None and vname is None:
         uname, vname = auto_coords(ds)
