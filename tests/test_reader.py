@@ -77,7 +77,7 @@ def test1():
 #     return fig, ax  # plt.show()
 
 
-def test5():
+def test_timing():
     filename = "examples/x=0_var_2_n00000000.plt"
 
     with catchtime() as t:
@@ -95,6 +95,5 @@ def test5():
         img = ax.tricontourf(triang, u, levels=100)
         plt.colorbar(img)
         ax.set_aspect("equal")
+        plt.savefig("test_timing.png")
     print(f"Execution time: {t():.4f} secs")
-    # plt.show()
-    return fig, ax

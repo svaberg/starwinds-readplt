@@ -68,4 +68,3 @@ def test_3d_point_cloud():
     axs[1, 0].plot(y, z, ".")
     axs[1, 1].plot(np.sort((x**2 + y**2 + z**2) ** 0.5), ".")
     plt.savefig("test_3d_point_cloud.png")
-    return fig, axs
