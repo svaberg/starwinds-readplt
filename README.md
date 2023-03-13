@@ -5,7 +5,7 @@
 
 The `readplt` project is a Python library for reading and parsing 
 [SWMF/BATSRUS](https://clasp.engin.umich.edu/research/theory-computational-methods/space-weather-modeling-framework/)
-output files in `.dat` and `.plt` format. The library may aso be able to read other `.plt` files but only a small subset of the `.plt` format specification is supported. The project also includes an use case in the form of a 'quicklook' command `sw-quick` that can visualise two-dimensional SWMF/BATSRUS output.
+output files in `.dat` and `.plt` format. The library may aso be able to read other `.plt` files but only a core subset of the `.plt` format specification is supported. The project also includes an use case in the form of a 'quicklook' command `sw-quick` that can visualise two-dimensional SWMF/BATSRUS output.
 
 
 ## Installation
@@ -27,11 +27,13 @@ density_g_cm3 = ds.variable('Rho [g/cm^3]')
 ## Running the quicklook command
 A simple 'quicklook' shell command is included which permits plotting of two-dimensional slices of the SWMF/BATSRUS results. Irregularly gridded data is accepted. The quicklook command uses the plot function in `basicplot.py` but this may be extended by the user.
 
-To create a quicklook `.png` file run
-
+To create a quicklook `.png` file from the included file `examples/x=0_var_2_n00000000.plt`
+run
 ```bash
+cd examples
 sw-quick x=0_var_2_n00000000.plt
 ```
+This will create a file named `ql-x-0-var-2-n00000000-plt-rho-g-cm-3.png`; the name comprises the prefix `ql`, the file name, and the name of the plotted variable. The name is sanitised using [`slugify`](https://pypi.org/project/python-slugify/) to replace spaces and other problematic characters in the output file name with dashes.
 
 A wildcard pattern may be used; in this case one `.png` file is created for each file matching the wildcard pattern:
 
