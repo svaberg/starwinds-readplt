@@ -39,6 +39,16 @@ class Dataset:
         self.variables = variables
         self.zone = zone
 
+    def __str__(self):
+        s = [
+            f"Title:     '{self.title}'",
+            f"Zone:      '{self.zone}'",
+            f"Variables: {len(self.variables)}",
+            f"Shape:     {self.points.shape}",
+            f"Variables: {self.variables}.",
+        ]
+        return "\n".join(s)
+
     @classmethod
     def from_file(cls, file):
         if file.split(".")[-1] == "dat":
@@ -58,6 +68,18 @@ class Dataset:
         points, corners, aux, title, variables, zone = read_plt(file)
         return cls(points, corners, aux, title, variables, zone)
 
-    def variable(self, name):
-        index = self.variables.index(name)
-        return self.points[:, index]
+    def variable(self, index_or_name):
+
+        try:
+            index = int(index_or_name)
+            return self.points[:, index]
+        except ValueError:
+            pass
+
+        try:
+            index = self.variables.index(index_or_name)
+            return self.points[:, index]
+        except ValueError:
+            raise IndexError(
+                f'Variable "{index_or_name}" not in dataset. Available variables are {self.variables}.'
+            )
