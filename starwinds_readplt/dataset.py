@@ -82,4 +82,6 @@ class Dataset:
         except ValueError:
             pass
 
-        raise IndexError(f'Variable \'{index_or_name}\' not in dataset. Available variables are {self.variables}.')
+        raise IndexError(
+            f"Variable '{index_or_name}' not in dataset. Available variables are {self.variables}."
+        )
