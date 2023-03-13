@@ -80,6 +80,6 @@ class Dataset:
             index = self.variables.index(index_or_name)
             return self.points[:, index]
         except ValueError:
-            raise IndexError(
-                f'Variable "{index_or_name}" not in dataset. Available variables are {self.variables}.'
-            )
+            pass
+
+        raise IndexError(f'Variable \'{index_or_name}\' not in dataset. Available variables are {self.variables}.')
