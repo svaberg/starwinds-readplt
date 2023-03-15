@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from matplotlib import tri
 
 
-
 from starwinds_readplt.dataset import Dataset
+
 
 def auto_coords(ds):
     if np.allclose(ds.variable("X [R]"), 0):

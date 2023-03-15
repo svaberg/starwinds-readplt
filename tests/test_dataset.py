@@ -1,5 +1,5 @@
 import numpy as np
-import glob 
+import glob
 from starwinds_readplt.dataset import Dataset
 
 import pytest
@@ -11,13 +11,14 @@ def test_read_variables():
     z = ds.variable("Z [R]")
     rho = ds.variable("Rho [g/cm^3]")
 
+
 def example_files(folder="examples"):
     plt_files = glob.glob(f"{folder}/*.plt")
     dat_files = glob.glob(f"{folder}/*.dat")
     return sorted(plt_files + dat_files)
-@pytest.mark.parametrize(
-    "file", example_files()
-)
+
+
+@pytest.mark.parametrize("file", example_files())
 def test_read_files(file):
     ds = Dataset.from_file(file)
 
