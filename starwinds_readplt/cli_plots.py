@@ -80,11 +80,12 @@ def quick_plot():
 
     logging.getLogger(__package__).setLevel(args.log_level)
     logging.basicConfig(
-        format="%(asctime)s %(name)s %(levelname)s: %(message)s", level=args.log_level
+        format="%(levelname)s: %(message)s", level=args.log_level
     )
     try:
+        coloredlogs.DEFAULT_LEVEL_STYLES['info']={'color':'green'}
+        coloredlogs.DEFAULT_LOG_FORMAT = '%(message)s'
         coloredlogs.install(args.log_level, logger=log)
-        log.info("Using colorful log messages!")
     except NameError:
         pass
 

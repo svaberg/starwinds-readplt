@@ -9,7 +9,7 @@ from starwinds_readplt.dataset import Dataset, auto_coords, triangles
 
 def plot(file, pngfile, u_name, v_name, w_name, wscale):
 
-    log.info(f"Opening data file {file}")
+    log.debug(f"Opening data file \"{file}\".")
     ds = Dataset.from_file(file)
 
     if u_name is None and v_name is None:
@@ -34,6 +34,6 @@ def plot(file, pngfile, u_name, v_name, w_name, wscale):
     ax.set_ylabel(v_name)
     ax.set_aspect("equal")
     cax.set_label(w_name)
-    log.info(f"Saving figure {pngfile}.")
+    log.info(f"Saving figure \"{pngfile}\".")
     plt.savefig(pngfile)
     plt.close()
