@@ -53,9 +53,9 @@ def plot(file, pngfile, u_name, v_name, w_name, wscale):
         w_var = np.log10(w_var)
         w_name = "log10 " + w_name
 
-    # img = ax.tripcolor(tris, w_var, shading="gouraud")
-    # cax = plt.colorbar(img)
-    # cax.set_label(w_name)
+    img = ax.tripcolor(tris, w_var, shading="gouraud")
+    cax = plt.colorbar(img)
+    cax.set_label(w_name)
 
     ax.set_title(ds.title + "\n" + str(file) + " " + ds.zone)
     ax.set_xlabel(u_name)
