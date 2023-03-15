@@ -15,7 +15,7 @@ def catchtime() -> float:
     yield lambda: perf_counter() - start
 
 
-def test1():
+def test_read():
     filename = "examples/x=0_var_2_n00000000.dat"
     dpoints, dcorners, *_ = read_dat(filename)
     # print(dpoints.shape)
@@ -30,51 +30,6 @@ def test1():
 
     assert np.allclose(dpoints, points)
     assert np.allclose(dcorners, corners)
-
-
-# def test2():
-#     filename = "examples/x=0_var_2_n00000000.plt"
-#     points, corners, *_ = read_plt(filename)
-
-#     u = (points[:, 4]**2 + points[:, 5]**2 + points[:, 6]**2)**.5
-#     triangles = np.vstack((corners[:, [0, 1, 2]], corners[:, [2, 3, 0]]))
-#     triang = tri.Triangulation(points[:, 1], points[:, 2], triangles)
-
-#     fig, ax = plt.subplots(figsize=(8,8))
-#     img = ax.tricontourf(triang, u, levels=100)
-#     plt.colorbar(img)
-#     ax.triplot(triang, color='k', linewidth=.1)
-#     return fig, ax
-
-
-# def test3():
-#     filename = "examples/z=0_var_3_n00000000.plt"
-#     points, corners, *_ = read_plt(filename)
-
-#     u = (points[:, 4]**2 + points[:, 5]**2 + points[:, 6]**2)**.5
-#     triangles = np.vstack((corners[:, [0, 1, 2]], corners[:, [2, 3, 0]]))
-#     triang = tri.Triangulation(points[:, 0], points[:, 1], triangles)
-
-#     fig, ax = plt.subplots(figsize=(8,8))
-#     img = ax.tricontourf(triang, u, levels=100)
-#     plt.colorbar(img)
-#     ax.triplot(triang, color='k', linewidth=.1)
-#     return fig, ax  # plt.show()
-
-
-# def test4():
-#     filename = "examples/x=0_var_2_n00009000.plt"
-#     points, corners, *_ = read_plt(filename)
-
-#     u = (points[:, 4]**2 + points[:, 5]**2 + points[:, 6]**2)**.5
-#     triangles = np.vstack((corners[:, [0, 1, 2]], corners[:, [2, 3, 0]]))
-#     triang = tri.Triangulation(points[:, 1], points[:, 2], triangles)
-
-#     fig, ax = plt.subplots(figsize=(8,8))
-#     img = ax.tricontourf(triang, u, levels=100)
-#     plt.colorbar(img)
-#     # ax.triplot(triang, color='k', linewidth=.1)
-#     return fig, ax  # plt.show()
 
 
 def test_timing():

@@ -1,33 +1,5 @@
-import numpy as np
-from matplotlib import tri
-
 from starwinds_readplt.read_dat import read_dat
 from starwinds_readplt.read_plt import read_plt
-
-
-def auto_coords(ds):
-    if np.allclose(ds.variable("X [R]"), 0):
-        return "Y [R]", "Z [R]"
-    if np.allclose(ds.variable("Y [R]"), 0):
-        return "X [R]", "Z [R]"
-    if np.allclose(ds.variable("Z [R]"), 0):
-        return "X [R]", "Y [R]"
-
-
-def triangles(ds, uname=None, vname=None):
-    """ """
-
-    if uname is None and vname is None:
-        uname, vname = auto_coords(ds)
-
-    pu = ds.variable(uname)
-    pv = ds.variable(vname)
-
-    if ds.corners.shape[1] != 4:
-        raise ValueError("Can only triangulate a 2D dataset with 4 corners per element")
-
-    triangles = np.vstack((ds.corners[:, [0, 1, 2]], ds.corners[:, [2, 3, 0]]))
-    return tri.Triangulation(pu, pv, triangles)
 
 
 class Dataset:

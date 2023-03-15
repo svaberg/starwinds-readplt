@@ -1,25 +1,28 @@
 import numpy as np
+import glob 
 from starwinds_readplt.dataset import Dataset
-from starwinds_readplt.dataset import triangles
 
 import pytest
 
 
-def test1():
+def test_read_variables():
     ds = Dataset.from_dat("examples/x=0_var_2_n00000000.dat")
     y = ds.variable("Y [R]")
     z = ds.variable("Z [R]")
     rho = ds.variable("Rho [g/cm^3]")
 
-
+def example_files(folder="examples"):
+    plt_files = glob.glob(f"{folder}/*.plt")
+    dat_files = glob.glob(f"{folder}/*.dat")
+    return sorted(plt_files + dat_files)
 @pytest.mark.parametrize(
-    "file", ("examples/x=0_var_2_n00000000.dat", "examples/x=0_var_2_n00000000.plt")
+    "file", example_files()
 )
-def test3(file):
+def test_read_files(file):
     ds = Dataset.from_file(file)
 
 
-def test_equal():
+def test_data_equal():
     ds_dat = Dataset.from_file("examples/x=0_var_2_n00000000.dat")
     ds_plt = Dataset.from_file("examples/x=0_var_2_n00000000.plt")
 
@@ -38,7 +41,7 @@ def test_equal():
     assert np.allclose(ds_dat.corners, ds_plt.corners)
 
 
-def test_aux():
+def test_aux_equal():
     ds_dat = Dataset.from_file("examples/x=0_var_2_n00000000.dat")
     ds_plt = Dataset.from_file("examples/x=0_var_2_n00000000.plt")
 

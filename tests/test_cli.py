@@ -1,12 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from starwinds_readplt.cli_plots import quick_plot
-from starwinds_readplt.dataset import Dataset
-from starwinds_readplt.dataset import triangles
-
 import pytest
-
 
 @pytest.mark.parametrize("ext", ("dat", "plt"))
 def test_dat(script_runner, ext):

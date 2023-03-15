@@ -22,7 +22,9 @@ except ImportError:
 
 
 def quick_plot():
-    parser = argparse.ArgumentParser(description="Quick plots of 2D SWMF/BATSRUS output")
+    parser = argparse.ArgumentParser(
+        description="Quick plots of 2D SWMF/BATSRUS output"
+    )
     parser.add_argument(
         "plt_file",
         type=str,
@@ -79,12 +81,10 @@ def quick_plot():
     args = parser.parse_args()
 
     logging.getLogger(__package__).setLevel(args.log_level)
-    logging.basicConfig(
-        format="%(levelname)s: %(message)s", level=args.log_level
-    )
+    logging.basicConfig(format="%(levelname)s: %(message)s", level=args.log_level)
     try:
-        coloredlogs.DEFAULT_LEVEL_STYLES['info']={'color':'green'}
-        coloredlogs.DEFAULT_LOG_FORMAT = '%(message)s'
+        coloredlogs.DEFAULT_LEVEL_STYLES["info"] = {"color": "green"}
+        coloredlogs.DEFAULT_LOG_FORMAT = "%(message)s"
         coloredlogs.install(args.log_level, logger=log)
     except NameError:
         pass
