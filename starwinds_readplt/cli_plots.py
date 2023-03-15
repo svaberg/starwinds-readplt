@@ -22,27 +22,27 @@ except ImportError:
 
 
 def quick_plot():
-    parser = argparse.ArgumentParser(description="Quick plots of 2D SWMF output")
+    parser = argparse.ArgumentParser(description="Quick plots of 2D SWMF/BATSRUS output")
     parser.add_argument(
         "plt_file",
         type=str,
         nargs="+",
-        help="Tecplot .plt or .dat files to join, "
-        "or glob pattern expanded by the shell (e.g. y=0*.plt for all the 2D y=0 plots)",
+        help="SWMF/BATSRUS 2D slice output file(s) in .plt or .dat format, "
+        "or glob pattern of such files expanded by the shell (e.g. y=0*.plt for all the 2D y=0 plots)",
     )
     parser.add_argument(
         "--u_name",
         dest="u_name",
         type=str,
         default=None,
-        help='First  coordinate (e.g. "X [R]")',
+        help='Coordinate variable to use on the plot x axis (e.g. "X [R]")',
     )
     parser.add_argument(
         "--v_name",
         dest="v_name",
         type=str,
         default=None,
-        help='Second coordinate (e.g. "Y [R]")',
+        help='Coordinate variable to use on the plot y axis (e.g. "Y [R]")',
     )
     parser.add_argument(
         "--w_name",
@@ -65,7 +65,7 @@ def quick_plot():
         action="store_const",
         const=logging.WARNING,
         default=logging.INFO,
-        help="only log warnings and errors",
+        help="Only log warnings and errors",
     )
     parser.add_argument(
         "-v",
@@ -73,7 +73,7 @@ def quick_plot():
         dest="log_level",
         action="store_const",
         const=logging.DEBUG,
-        help="generate and log detailed debug output",
+        help="Generate and log detailed debug output",
     )
 
     args = parser.parse_args()
