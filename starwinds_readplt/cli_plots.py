@@ -1,8 +1,5 @@
 import logging
-
-log = logging.getLogger(__name__)
 import argparse
-
 from slugify import slugify
 
 try:
@@ -12,13 +9,14 @@ except ModuleNotFoundError:
 
 from . import basicplot
 
-plot_callback = basicplot.plot
 try:
     from . import fancyplot
 
     plot_callback = fancyplot.plot
 except ImportError:
-    pass
+    plot_callback = basicplot.plot
+
+log = logging.getLogger(__name__)
 
 
 def quick_plot():

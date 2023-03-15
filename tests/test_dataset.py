@@ -7,9 +7,15 @@ import pytest
 
 def test_read_variables():
     ds = Dataset.from_dat("examples/x=0_var_2_n00000000.dat")
+
     y = ds.variable("Y [R]")
+    assert len(y) > 0
+
     z = ds.variable("Z [R]")
+    assert len(z) > 0
+
     rho = ds.variable("Rho [g/cm^3]")
+    assert len(rho) > 0
 
 
 def example_files(folder="examples"):
@@ -21,6 +27,11 @@ def example_files(folder="examples"):
 @pytest.mark.parametrize("file", example_files())
 def test_read_files(file):
     ds = Dataset.from_file(file)
+    assert len(ds.variables) > 0
+
+    for vname in ds.variables:
+        vdata = ds.variable(vname)
+        assert len(vdata) > 0
 
 
 def test_data_equal():

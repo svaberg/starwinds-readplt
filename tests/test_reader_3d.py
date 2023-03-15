@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import tri
 
 from time import perf_counter
 from contextlib import contextmanager

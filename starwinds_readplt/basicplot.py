@@ -1,12 +1,10 @@
-import logging
-
-log = logging.getLogger(__name__)
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import tri
-
-
+import logging
 from starwinds_readplt.dataset import Dataset
+
+log = logging.getLogger(__name__)
 
 
 def auto_coords(ds):

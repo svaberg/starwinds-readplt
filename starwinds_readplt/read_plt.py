@@ -74,10 +74,7 @@ def read_plt(filename):
             log.debug("Found FEBRICK zone type.")
             num_corners_per_elem = 8
         else:
-            import pdb
-
-            pdb.set_trace()
-            raise ValueError(f"Unrecognized zone type.")
+            raise ValueError(f"Unrecognized zone type {content[ptr : ptr + 4]}.")
         ptr += 4
         log.debug(f"Using {num_corners_per_elem} corners per element.")
 
