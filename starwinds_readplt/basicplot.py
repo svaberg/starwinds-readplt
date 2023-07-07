@@ -33,7 +33,6 @@ def triangles(ds, uname=None, vname=None):
 
 
 def plot(file, pngfile, u_name, v_name, w_name, wscale):
-
     log.debug(f'Opening data file "{file}".')
     ds = Dataset.from_file(file)
 

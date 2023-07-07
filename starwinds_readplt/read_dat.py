@@ -2,11 +2,9 @@ import numpy as np
 
 
 def read_dat(filename):
-
     # Read file header and close file
     # Only one zone supported.
     with open(filename) as file:
-
         # Assume title, variables and zone are fixed.
         dataset_title = file.readline()
         dataset_title = dataset_title.removeprefix("TITLE=").rstrip().strip('"')
