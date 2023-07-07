@@ -5,7 +5,7 @@
 
 The `readplt` project is a Python library for reading and parsing 
 [SWMF/BATSRUS](https://clasp.engin.umich.edu/research/theory-computational-methods/space-weather-modeling-framework/)
-output files in `.dat` and `.plt` format. The library may also be able to read other `.plt` files but only a core subset of the `.plt` format specification is supported. The project also includes an use case in the form of a 'quicklook' command `sw-quick` that can visualise two-dimensional SWMF/BATSRUS output.
+output files in `.dat` and `.plt` format. The library may also be able to read other `.plt` files but only a core subset of the `.plt` format specification is supported. The project also includes a use case in the form of a 'quicklook' command `sw-quick` that can visualise two-dimensional SWMF/BATSRUS output.
 
 
 ## Installation
