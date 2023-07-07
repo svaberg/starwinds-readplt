@@ -21,7 +21,7 @@ This code reads a dataset named `<file>` and stores the dataset variable named `
 from starwinds_readplt.dataset import Dataset
 ds = Dataset.from_file('<file>')
 print(ds)
-density_g_cm3 = ds.variable('Rho [g/cm^3]')
+density_g_cm3 = ds('Rho [g/cm^3]')
 ```
 
 ## Running the quicklook command

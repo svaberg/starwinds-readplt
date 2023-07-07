@@ -41,7 +41,6 @@ class Dataset:
         return cls(points, corners, aux, title, variables, zone)
 
     def variable(self, index_or_name):
-
         try:
             index = int(index_or_name)
             return self.points[:, index]
@@ -57,3 +56,6 @@ class Dataset:
         raise IndexError(
             f"Variable '{index_or_name}' not in dataset. Available variables are {self.variables}."
         )
+
+    def __call__(self, index_or_name):
+        return self.variable(index_or_name)
