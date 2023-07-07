@@ -181,7 +181,9 @@ def read_plt(filename):
         #
         log.debug(f"Start of point data at {hex(ptr)}.")
         num_bytes = num_points * num_vars * 4
-        points = struct.unpack(f"{num_bytes // 4}f", content[ptr : ptr + num_bytes])
+        points = np.frombuffer(
+            content, dtype=np.float32, count=num_bytes // 4, offset=ptr
+        )
         ptr += num_bytes
 
         points = np.array(points).reshape(len(variables), -1).transpose()
@@ -192,8 +194,8 @@ def read_plt(filename):
         if num_corners_per_elem > 0:
             log.debug(f"Start of connectivity at {hex(ptr)}.")
             num_bytes = num_corners_per_elem * num_elem * 4
-            corners = struct.unpack(
-                f"{num_bytes // 4}I", content[ptr : ptr + num_bytes]
+            corners = np.frombuffer(
+                content, dtype=np.int32, count=num_bytes // 4, offset=ptr
             )
             ptr += num_bytes
 
