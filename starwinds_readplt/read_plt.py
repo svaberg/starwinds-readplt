@@ -25,7 +25,7 @@ def read_plt(filename):
         assert content[ptr : ptr + 4] == struct.pack("I", 0)  # Filetype full
         ptr += 4
 
-        title = readstr32(content[ptr:])
+        title = readstr32_fast(content, ptr)
         ptr += len(title) * 4 + 4
 
         # Read number of variables
@@ -35,7 +35,7 @@ def read_plt(filename):
 
         variables = []
         for _ in range(num_vars):
-            vname = readstr32(content[ptr:])
+            vname = readstr32_fast(content, ptr)
             ptr += len(vname) * 4 + 4
 
             variables.append(vname)
@@ -46,7 +46,7 @@ def read_plt(filename):
         assert ptr % 4 == 0
 
         # Read zone name
-        zone_name = readstr32(content[ptr:])
+        zone_name = readstr32_fast(content, ptr)
         ptr += len(zone_name) * 4 + 4
 
         log.debug(f"Zone name: {zone_name}.")
@@ -134,11 +134,11 @@ def read_plt(filename):
             if aux_data == 0:
                 break
 
-            key = readstr32(content[ptr:])
+            key = readstr32_fast(content, ptr)
             ptr += len(key) * 4 + 4
             ptr += 4  # Format
 
-            val = readstr32(content[ptr:])
+            val = readstr32_fast(content, ptr)
             ptr += len(val) * 4 + 4
 
             val = val.strip()
@@ -207,8 +207,25 @@ def read_plt(filename):
 
 
 def readstr32(content):
+    """
+    Read a string from an int32 array.
+    """
     null_int = struct.pack("I", 0)
     null_loc = content.find(null_int)
     null_loc = math.ceil(null_loc / 4) * 4
 
     return content[0:null_loc:4].decode("ascii")
+
+
+def readstr32_fast(content, ptr):
+    """
+    Read a string from an int32 array.
+    This is faster than the  readstr32 function becaue it avoids
+    copying the array.
+    """
+    null_int = struct.pack("I", 0)
+    null_loc = content.find(null_int, ptr)
+
+    null_loc = math.ceil(null_loc / 4) * 4
+
+    return content[ptr:null_loc:4].decode("ascii")
