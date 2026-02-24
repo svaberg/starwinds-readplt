@@ -43,13 +43,13 @@ class Dataset:
     def variable(self, index_or_name):
         try:
             index = int(index_or_name)
-            return self.points[:, index]
+            return self.points[..., index]
         except ValueError:
             pass
 
         try:
             index = self.variables.index(index_or_name)
-            return self.points[:, index]
+            return self.points[..., index]
         except ValueError:
             pass
 
