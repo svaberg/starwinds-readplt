@@ -32,7 +32,7 @@ def triangles(ds, uname=None, vname=None):
     return tri.Triangulation(pu, pv, triangles)
 
 
-def plot(file, pngfile, u_name, v_name, w_name, wscale):
+def plot(file, pngfile, u_name, v_name, w_name, wscale, identifier=None):
     log.debug(f'Opening data file "{file}".')
     try:
         ds = Dataset.from_file(file)
@@ -58,7 +58,11 @@ def plot(file, pngfile, u_name, v_name, w_name, wscale):
     cax = plt.colorbar(img)
     cax.set_label(w_name)
 
-    ax.set_title(ds.title + "\n" + str(file) + " " + ds.zone)
+    _title = ds.title + "\n" + str(file) + " " + ds.zone
+    if identifier is not None:
+        _title = _title + "\n" + str(identifier)
+    ax.set_title(_title)
+
     ax.set_xlabel(u_name)
     ax.set_ylabel(v_name)
     ax.set_aspect("equal")

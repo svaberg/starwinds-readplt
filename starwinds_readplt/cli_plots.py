@@ -1,3 +1,4 @@
+import os
 import logging
 import argparse
 from slugify import slugify
@@ -75,6 +76,12 @@ def quick_plot():
         const=logging.DEBUG,
         help="Generate and log detailed debug output",
     )
+    parser.add_argument(
+        "--noclobber",
+        dest="noclobber",
+        action="store_true",
+        help="Do not overwrite existing files",
+        )
 
     args = parser.parse_args()
 
@@ -100,6 +107,9 @@ def quick_plot():
 
     png_filenames = [slugify(f"ql-{f}-{args.w_name}") + ".png" for f in plt_filenames]
     for file, png_file in zip(plt_filenames, png_filenames):
+        if args.noclobber and os.path.exists(png_file):
+            log.warning("Skipping existing file %s" % png_file)
+            continue
         plot_callback(
             file, png_file, args.u_name, args.v_name, args.w_name, args.wscale
         )
