@@ -82,6 +82,13 @@ def quick_plot():
         action="store_true",
         help="Do not overwrite existing files",
         )
+    parser.add_argument(
+        "--identifier",
+        dest="identifier",
+        type=str,
+        default=None,
+        help="Optional identifier string to add to the plot title",
+    )
 
     args = parser.parse_args()
 
@@ -111,5 +118,5 @@ def quick_plot():
             log.warning("Skipping existing file %s" % png_file)
             continue
         plot_callback(
-            file, png_file, args.u_name, args.v_name, args.w_name, args.wscale
+            file, png_file, args.u_name, args.v_name, args.w_name, args.wscale, args.identifier
         )
