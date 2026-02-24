@@ -34,7 +34,11 @@ def triangles(ds, uname=None, vname=None):
 
 def plot(file, pngfile, u_name, v_name, w_name, wscale):
     log.debug(f'Opening data file "{file}".')
-    ds = Dataset.from_file(file)
+    try:
+        ds = Dataset.from_file(file)
+    except ValueError as e:
+        log.error(f"Failed to read dataset from file {file}: {e}")
+        return
 
     if u_name is None and v_name is None:
         u_name, v_name = auto_coords(ds)
