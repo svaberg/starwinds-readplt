@@ -7,13 +7,13 @@ from starwinds_readplt.dataset import Dataset
 log = logging.getLogger(__name__)
 
 
-def auto_coords(ds):
-    if np.allclose(ds.variable("X [R]"), 0):
-        return "Y [R]", "Z [R]"
-    if np.allclose(ds.variable("Y [R]"), 0):
-        return "X [R]", "Z [R]"
-    if np.allclose(ds.variable("Z [R]"), 0):
-        return "X [R]", "Y [R]"
+def auto_coords(ds, names=None):
+
+    if names is None:
+        names = "X [R]", "Y [R]", "Z [R]"
+
+    all_zero = [np.allclose(ds.variable(name), 0) for name in names]
+    return np.array(names)[np.logical_not(all_zero)]
 
 
 def triangles(ds, uname=None, vname=None):
