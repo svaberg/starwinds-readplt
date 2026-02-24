@@ -123,4 +123,10 @@ def read_dat(filename):
             raise ValueError(f"Expected {zone_e} rows of corner data, got {corners.shape[0]}.")
 
         corners = corners - 1  # Index from zero (like in the binary format)
+
+        tail = reader.file.read().strip()
+        if tail:
+            log.warning(f"File has {len(tail)} extra characters after expected data. Ignoring.")
+            raise ValueError(f"File has {len(tail)} extra characters after expected data. Ignoring.")
+
         return points, corners, aux, title, variables, zone_title
