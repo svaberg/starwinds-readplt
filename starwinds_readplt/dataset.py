@@ -56,6 +56,10 @@ class Dataset:
         raise IndexError(
             f"Variable '{index_or_name}' not in dataset. Available variables are {self.variables}."
         )
+    
+    def span(self, index_or_name):
+        var = self.variable(index_or_name)
+        return var.min(), var.max()
 
     def __call__(self, index_or_name):
         return self.variable(index_or_name)
