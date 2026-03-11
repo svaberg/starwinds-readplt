@@ -58,8 +58,14 @@ class Dataset:
         )
     
     def span(self, index_or_name):
+        """Calculate the span of a variable; used for coordinate centering"""
         var = self.variable(index_or_name)
         return var.min(), var.max()
+    
+    def center(self, index_or_name):
+        """Calculate the center value of a variable; used for coordinate centering"""
+        var = self.variable(index_or_name)
+        return (var.min() + var.max()) / 2
 
     def __call__(self, index_or_name):
         return self.variable(index_or_name)
