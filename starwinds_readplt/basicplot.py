@@ -1,3 +1,5 @@
+"""Plotting helpers for quick 2D BATSRUS visualizations."""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import tri
@@ -8,6 +10,7 @@ log = logging.getLogger(__name__)
 
 
 def auto_coords(ds, names=None):
+    """Pick non-zero coordinate variables from a candidate name list."""
 
     if names is None:
         names = "X [R]", "Y [R]", "Z [R]"
@@ -17,7 +20,7 @@ def auto_coords(ds, names=None):
 
 
 def triangles(ds, uname=None, vname=None):
-    """ """
+    """Build a triangulation from quadrilateral connectivity."""
 
     if uname is None and vname is None:
         uname, vname = auto_coords(ds)
@@ -33,6 +36,7 @@ def triangles(ds, uname=None, vname=None):
 
 
 def plot(file, pngfile, u_name, v_name, w_name, wscale, identifier=None):
+    """Render a quick scalar-field plot from a .dat/.plt file."""
     log.debug(f'Opening data file "{file}".')
     try:
         ds = Dataset.from_file(file)

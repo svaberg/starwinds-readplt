@@ -1,3 +1,5 @@
+"""Setuptools entry point for packaging starwinds_readplt."""
+
 import versioneer
 from setuptools import setup
 

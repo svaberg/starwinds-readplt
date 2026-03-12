@@ -1,3 +1,5 @@
+"""Reader-level comparisons and timing checks for 2D examples."""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import tri
@@ -11,11 +13,13 @@ from starwinds_readplt.read_plt import read_plt
 
 @contextmanager
 def catchtime() -> float:
+    """Yield a callable that reports elapsed wall-clock time."""
     start = perf_counter()
     yield lambda: perf_counter() - start
 
 
 def test_read():
+    """Ensure .dat and .plt readers return matching 2D arrays."""
     filename = "examples/x=0_var_2_n00000000.dat"
     dpoints, dcorners, *_ = read_dat(filename)
     # print(dpoints.shape)
@@ -33,6 +37,7 @@ def test_read():
 
 
 def test_timing():
+    """Exercise a read-triangulate-plot workflow for performance sanity."""
     filename = "examples/x=0_var_2_n00000000.plt"
 
     with catchtime() as t:

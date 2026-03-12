@@ -1,3 +1,5 @@
+"""CLI entry point for generating quick diagnostic plots."""
+
 import os
 import logging
 import argparse
@@ -21,6 +23,7 @@ log = logging.getLogger(__name__)
 
 
 def quick_plot():
+    """Parse CLI args and generate one plot per input file."""
     parser = argparse.ArgumentParser(
         description="Quick plots of 2D SWMF/BATSRUS output"
     )

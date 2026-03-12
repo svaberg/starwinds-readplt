@@ -1,6 +1,7 @@
 # This SWMF/BATSRUS .plt format reader is based on the .plt format specification at
 # https://tecplot.azureedge.net/products/360/current/360_data_format_guide.pdf
 # but it is not a generic .plt reader and should only be used for SWMF/BATSRUS output.
+"""Reader for SWMF/BATSRUS binary Tecplot .plt files."""
 
 import numpy as np
 import struct
@@ -11,6 +12,7 @@ log = logging.getLogger(__name__)
 
 
 def read_plt(filename):
+    """Read a BATSRUS .plt file into arrays and metadata."""
     with open(filename, mode="rb") as file:  # b is important -> binary
         content = file.read()
 

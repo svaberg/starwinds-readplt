@@ -1,9 +1,12 @@
+"""Reader for SWMF/BATSRUS ASCII Tecplot .dat files."""
+
 import numpy as np
 import logging
 log = logging.getLogger(__name__)
 
 
 class LineReader:
+    """Line iterator with peek support and line-number tracking."""
     def __init__(self, filename):
         self.file = open(filename)
         self.line_no = 0
@@ -26,6 +29,7 @@ class LineReader:
         return line
     
     def peek(self):
+        """Return the next line without consuming it."""
         pos = self.file.tell()
         line = self.file.readline()
         self.file.seek(pos)
@@ -39,6 +43,7 @@ class LineReader:
         return None
     
     def loadtxt(self, max_rows, *args, **kwargs):
+        """Read numeric rows with numpy and keep line_no in sync."""
         line_no = self.line_no
         interval_str = f"lines {line_no + 1} to {line_no + max_rows}"
         log.debug(f"Try reading {max_rows} data rows from {interval_str}.")
@@ -117,7 +122,7 @@ def read_dat(filename):
         if points.shape[0] != zone_n:
             raise ValueError(f"Expected {zone_n} rows of point data, got {points.shape[0]}.")
 
-        # Read corners
+        # Read connectivity.
         log.debug(f"Reading {zone_e} corners from file lines {reader.line_no + 1} to {reader.line_no + zone_e}.")
         corners = reader.loadtxt(max_rows=zone_e, dtype=int)
         log.debug(f"Finished reading corners. Shape is {corners.shape}.")

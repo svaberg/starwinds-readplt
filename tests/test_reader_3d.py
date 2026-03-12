@@ -1,3 +1,5 @@
+"""Reader-level regression tests for 3D examples."""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -12,6 +14,7 @@ import pytest
 
 @contextmanager
 def catchtime() -> float:
+    """Yield a callable that reports elapsed wall-clock time."""
     start = perf_counter()
     yield lambda: perf_counter() - start
 
@@ -20,6 +23,7 @@ def catchtime() -> float:
     "filename", ("examples/3d__var_1_n00000000.dat", "examples/3d__var_1_n00000000.plt")
 )
 def test_read_3d(filename):
+    """Verify basic shape and indexing invariants for 3D data."""
     if filename.split(".")[-1] == "dat":
         points, corners, aux, title, variables, zone_name = read_dat(filename)
     else:
@@ -35,6 +39,7 @@ def test_read_3d(filename):
 
 
 def test_compare_dat_and_plt():
+    """Check that 3D .dat and .plt decoding results match."""
     filename = "examples/3d__var_1_n00000000.dat"
     dpoints, dcorners, daux, dtitle, dvariables, dzone_name = read_dat(filename)
 
@@ -51,6 +56,7 @@ def test_compare_dat_and_plt():
 
 
 def test_3d_point_cloud():
+    """Generate a basic multi-view point-cloud diagnostic figure."""
     filename = "examples/3d__var_1_n00000000.plt"
 
     with catchtime() as t:
