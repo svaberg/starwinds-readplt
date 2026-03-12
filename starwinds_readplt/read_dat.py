@@ -58,6 +58,8 @@ class LineReader:
             msg = " ".join(msg_tokens[:-1]) + f" {row_id}"
             raise ValueError(msg) from e
 
+        array = np.atleast_2d(array)
+
         read_lines = array.shape[0]
         self.line_no += read_lines
         if read_lines == max_rows:
