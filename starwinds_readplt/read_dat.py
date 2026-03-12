@@ -30,6 +30,13 @@ class LineReader:
         line = self.file.readline()
         self.file.seek(pos)
         return line
+
+    def next_if(self, prefix):
+        """Consume and return the next line if it starts with prefix."""
+        line = self.peek()
+        if line.startswith(prefix):
+            return next(self)
+        return None
     
     def loadtxt(self, max_rows, *args, **kwargs):
         line_no = self.line_no
@@ -56,57 +63,52 @@ class LineReader:
 
 
 def read_dat(filename):
-    # Read file header and close file
+    """Read a one-zone BATSRUS .dat file into arrays and metadata."""
+    # Read one-zone DAT file.
     # Only one zone supported.
     with LineReader(filename) as reader:
 
-        # Assume title, variables and zone are fixed.
-        title = next(reader)
-        if not title.startswith("TITLE="):
-            raise ValueError(f"Expected dataset title line starting with 'TITLE=', got '{title}'")
-        title = title.removeprefix("TITLE=").rstrip().strip('"')
+        # Read title line if it exists.
+        if (title := reader.next_if("TITLE=")) is not None:
+            title = title.removeprefix("TITLE=").rstrip().strip('"')
+        else:
+            log.debug("No title line found at start of file (expected for shell plot).")
 
         # Read variables
-        variables = next(reader)
-        if not variables.startswith("VARIABLES"):
-            raise ValueError(f"Expected variables line starting with 'VARIABLES', got '{variables}'")
-        variables = variables.removeprefix("VARIABLES =")
-        variables = variables.split(",")
-        variables = [v.strip().strip('"') for v in variables]
-        log.debug(f"Number of variables {len(variables)}.")
+        if (variables := reader.next_if("VARIABLES")) is not None:
+            variables = [v.strip().strip('"') for v in variables.removeprefix("VARIABLES =").split(",")]
+            log.debug(f"Number of variables {len(variables)}.")
+        else:
+            raise ValueError(f"Expected variables line starting with 'VARIABLES', got '{reader.peek()}'")
+
 
         # Read zone title and other things from the zone line
-        zone_line = next(reader)
-        if not zone_line.startswith("ZONE"):
-            raise ValueError(f"Expected zone title line starting with 'ZONE', got '{zone_line}'")
-        zone_line = zone_line.removeprefix("ZONE").split(",")
-        zone = {}
-        for item in zone_line:
-            key, value = item.split("=", 1)
-            zone[key.strip()] = value.strip().strip('"').strip() # Strip whitespace and quotes
-        zone_title = zone.get("T", None)
-        zone_n = int(zone.get("N"))
-        zone_e = int(zone.get("E"))
+        if (zone_spec := reader.next_if("ZONE")) is not None:
+            zone_spec = zone_spec.removeprefix("ZONE").split(",")
+            zone = {}
+            for item in zone_spec:
+                key, value = item.split("=", 1)
+                zone[key.strip()] = value.strip().strip('"').strip() # Strip whitespace and quotes
+            zone_title = zone.get("T", None)
+            zone_n = int(zone.get("N"))
+            zone_e = int(zone.get("E"))
+        else:
+            raise ValueError(f"Expected zone title line starting with 'ZONE', got '{reader.peek()}'")
 
 
-        # Read aux data into array
-        auxdata = []
-        while True:
-            line = reader.peek()
-            if not line or not line.startswith("AUXDATA"):
-                break
-            auxdata.append(next(reader).rstrip())
-        log.debug(f"Number of auxdata rows {len(auxdata)}.")
-        # Build aux data dict
-        keys = [a.split("=", 1)[0] for a in auxdata]
-        vals = [a.split("=", 1)[1] for a in auxdata]
-        keys = [k.removeprefix("AUXDATA ") for k in keys]
-        vals = [v.strip('"').strip() for v in vals]
-        aux = {k: v for k, v in zip(keys, vals)}
+        # Read aux data into dict.
+        aux = {}
+        while (line := reader.next_if("AUXDATA")) is not None:
+            key, val = line.rstrip().split("=", 1)
+            key = key.removeprefix("AUXDATA ")
+            aux[key] = val.strip('"').strip()
+        log.debug(f"Number of auxdata rows {len(aux)}.")
 
-        # End of header processing.
+        # ---------------------------
+        # Header parsing ends here.
+        # ---------------------------
 
-        # Read points into array
+        # Read point data.
         log.debug(f"Reading {zone_n} points from file lines {reader.line_no + 1} to {reader.line_no + zone_n}.")
         points = reader.loadtxt(max_rows=zone_n)
         log.debug(f"Finished reading points. Shape is {points.shape}.")
