@@ -10,15 +10,6 @@ try:
 except ModuleNotFoundError:
     pass
 
-from . import basicplot
-
-try:
-    from . import fancyplot
-
-    plot_callback = fancyplot.plot
-except ImportError:
-    plot_callback = basicplot.plot
-
 log = logging.getLogger(__name__)
 
 
@@ -114,6 +105,23 @@ def quick_plot():
                 "No files found matching pattern '%s'. Exiting." % plt_filenames[0]
             )
             exit(1)
+
+    try:
+        from . import fancyplot
+    except ImportError:
+        try:
+            from . import basicplot
+        except ModuleNotFoundError as exc:
+            if exc.name == "matplotlib":
+                raise SystemExit(
+                    "The matplotlib package is required for plotting. "
+                    "Install matplotlib in your environment, or run: "
+                    "pip install batread[graphics]"
+                ) from exc
+            raise
+        plot_callback = basicplot.plot
+    else:
+        plot_callback = fancyplot.plot
 
     png_filenames = [
         re.sub(r"[^a-z0-9]+", "-", f"ql-{file}-{args.w_name}".lower()).strip("-") + ".png"

@@ -2,7 +2,7 @@
 
 import numpy as np
 import glob
-from starwinds_readplt.dataset import Dataset
+from batread.dataset import Dataset
 
 import pytest
 

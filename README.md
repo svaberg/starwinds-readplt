@@ -5,7 +5,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 
-The `readplt` project is a Python library for reading and parsing 
+The `batread` project is a Python library for reading and parsing 
 [SWMF/BATSRUS](https://clasp.engin.umich.edu/research/theory-computational-methods/space-weather-modeling-framework/)
 output files in `.dat` and `.plt` format. The library may also be able to read other `.plt` files but only a core subset of the `.plt` format specification is supported. The project also includes a use case in the form of a 'quicklook' command `sw-quick` that can visualise two-dimensional SWMF/BATSRUS output.
 
@@ -17,10 +17,15 @@ cd <project>
 pip install .
 ```
 
+This installs the reader functionality only. To use the quicklook plotting command, install the graphics extra:
+```bash
+pip install .[graphics]
+```
+
 ## Python code to access file data
 This code reads a dataset named `<file>` and stores the dataset variable named `Rho [g/cm^3]` in a local variable named `density_g_cm3`.
 ```python
-from starwinds_readplt.dataset import Dataset
+from batread.dataset import Dataset
 ds = Dataset.from_file('<file>')
 print(ds)
 density_g_cm3 = ds('Rho [g/cm^3]')
@@ -28,6 +33,11 @@ density_g_cm3 = ds('Rho [g/cm^3]')
 
 ## Running the quicklook command
 A simple 'quicklook' shell command is included which permits plotting of two-dimensional slices of the SWMF/BATSRUS results. Irregularly gridded data is accepted. The quicklook command uses the plot function in `basicplot.py` but this may be extended by the user.
+
+The quicklook command requires the graphics extra:
+```bash
+pip install .[graphics]
+```
 
 To create a quicklook `.png` file from the included file `examples/x=0_var_2_n00000000.plt`
 run

@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import tri
 import logging
-from starwinds_readplt.dataset import Dataset
+from batread.dataset import Dataset
 
 log = logging.getLogger(__name__)
 

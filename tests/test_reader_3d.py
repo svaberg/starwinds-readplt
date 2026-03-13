@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from time import perf_counter
 from contextlib import contextmanager
 
-from starwinds_readplt.read_dat import read_dat
-from starwinds_readplt.read_plt import read_plt
+from batread.read_dat import read_dat
+from batread.read_plt import read_plt
 
 import pytest
 

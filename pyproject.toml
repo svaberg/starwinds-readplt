@@ -1,15 +1,16 @@
 [project]
-name = "starwinds_readplt"
+name = "batread"
 description = "Read SWMF/BATSRUS .plt and .dat files"
 version = "1.0"
-dependencies = ["numpy", "matplotlib",]
+dependencies = ["numpy",]
 
 [build-system]
 requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
-tests = ["pytest", "pytest-console-scripts", ]
+graphics = ["matplotlib",]
+tests = ["pytest", "pytest-console-scripts", "matplotlib",]
 
 [project.scripts]
-sw-quick = "starwinds_readplt.cli_plots:quick_plot"
+sw-quick = "batread.cli_plots:quick_plot"

@@ -1,7 +1,7 @@
 """Container type and loaders for BATSRUS datasets."""
 
-from starwinds_readplt.read_dat import read_dat
-from starwinds_readplt.read_plt import read_plt
+from batread.read_dat import read_dat
+from batread.read_plt import read_plt
 
 
 class Dataset:
