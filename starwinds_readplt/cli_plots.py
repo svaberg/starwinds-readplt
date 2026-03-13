@@ -3,7 +3,7 @@
 import os
 import logging
 import argparse
-from slugify import slugify
+import re
 
 try:
     import coloredlogs
@@ -115,7 +115,10 @@ def quick_plot():
             )
             exit(1)
 
-    png_filenames = [slugify(f"ql-{f}-{args.w_name}") + ".png" for f in plt_filenames]
+    png_filenames = [
+        re.sub(r"[^a-z0-9]+", "-", f"ql-{file}-{args.w_name}".lower()).strip("-") + ".png"
+        for file in plt_filenames
+    ]
     for file, png_file in zip(plt_filenames, png_filenames):
         if args.noclobber and os.path.exists(png_file):
             log.warning("Skipping existing file %s" % png_file)

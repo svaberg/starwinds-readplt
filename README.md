@@ -35,7 +35,7 @@ run
 cd examples
 sw-quick x=0_var_2_n00000000.plt
 ```
-This will create a file named `ql-x-0-var-2-n00000000-plt-rho-g-cm-3.png`; the name comprises the prefix `ql`, the file name, and the name of the plotted variable. The name is sanitised using [`slugify`](https://pypi.org/project/python-slugify/) to replace spaces and other problematic characters in the output file name with dashes.
+This will create a file named `ql-x-0-var-2-n00000000-plt-rho-g-cm-3.png`; the name comprises the prefix `ql`, the file name, and the name of the plotted variable. Non-alphanumeric characters are normalised to dashes in the output file name.
 
 A wildcard pattern may be used; in this case one `.png` file is created for each file matching the wildcard pattern:
 

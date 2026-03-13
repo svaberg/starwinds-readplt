@@ -1,20 +1,12 @@
 [project]
 name = "starwinds_readplt"
 description = "Read SWMF/BATSRUS .plt and .dat files"
-dynamic = ['version']
-dependencies = ["numpy", "matplotlib", "python-slugify",]
+version = "1.0"
+dependencies = ["numpy", "matplotlib",]
 
 [build-system]
-requires = ["versioneer", "setuptools", "setuptools-scm"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
-
-[tool.versioneer]
-VCS = "git"
-style = "pep440"
-versionfile_source = "starwinds_readplt/_version.py"
-versionfile_build = "starwinds_readplt/_version.py"
-tag_prefix = "v"
-parentdir_prefix = ""
 
 [project.optional-dependencies]
 tests = ["pytest", "pytest-console-scripts", ]
