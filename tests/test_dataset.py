@@ -11,13 +11,13 @@ def test_read_variables():
     """Verify named variable access returns data."""
     ds = Dataset.from_dat("examples/x=0_var_2_n00000000.dat")
 
-    y = ds.variable("Y [R]")
+    y = ds["Y [R]"]
     assert len(y) > 0
 
-    z = ds.variable("Z [R]")
+    z = ds["Z [R]"]
     assert len(z) > 0
 
-    rho = ds.variable("Rho [g/cm^3]")
+    rho = ds["Rho [g/cm^3]"]
     assert len(rho) > 0
 
 
@@ -35,7 +35,7 @@ def test_read_files(file):
     assert len(ds.variables) > 0
 
     for vname in ds.variables:
-        vdata = ds.variable(vname)
+        vdata = ds[vname]
         assert len(vdata) > 0
 
 

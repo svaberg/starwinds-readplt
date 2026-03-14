@@ -49,7 +49,7 @@ class Dataset:
         points, corners, aux, title, variables, zone = read_plt(file)
         return cls(points, corners, aux, title, variables, zone)
 
-    def variable(self, index_or_name):
+    def _variable(self, index_or_name):
         """Return one variable by integer index or exact name."""
         try:
             index = int(index_or_name)
@@ -67,16 +67,16 @@ class Dataset:
             f"Variable '{index_or_name}' not in dataset. Available variables are {self.variables}."
         )
 
+    def __getitem__(self, index_or_name):
+        """Return one variable by integer index or exact name."""
+        return self._variable(index_or_name)
+
     def span(self, index_or_name):
         """Calculate the span of a variable; used for coordinate centering"""
-        var = self.variable(index_or_name)
+        var = self._variable(index_or_name)
         return var.min(), var.max()
 
     def center(self, index_or_name):
         """Calculate the center value of a variable; used for coordinate centering"""
-        var = self.variable(index_or_name)
+        var = self._variable(index_or_name)
         return (var.min() + var.max()) / 2
-
-    def __call__(self, index_or_name):
-        """Alias for variable()."""
-        return self.variable(index_or_name)

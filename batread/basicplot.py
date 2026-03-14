@@ -15,7 +15,7 @@ def auto_coords(ds, names=None):
     if names is None:
         names = "X [R]", "Y [R]", "Z [R]"
 
-    all_zero = [np.allclose(ds.variable(name), 0) for name in names]
+    all_zero = [np.allclose(ds[name], 0) for name in names]
     return np.array(names)[np.logical_not(all_zero)]
 
 
@@ -25,8 +25,8 @@ def triangles(ds, uname=None, vname=None):
     if uname is None and vname is None:
         uname, vname = auto_coords(ds)
 
-    pu = ds.variable(uname)
-    pv = ds.variable(vname)
+    pu = ds[uname]
+    pv = ds[vname]
 
     if ds.corners.shape[1] != 4:
         raise ValueError("Can only triangulate a 2D dataset with 4 corners per element")
@@ -51,7 +51,7 @@ def plot(file, pngfile, u_name, v_name, w_name, wscale, identifier=None):
 
     _, ax = plt.subplots()
 
-    w_var = ds.variable(w_name)
+    w_var = ds[w_name]
 
     if wscale == "log":
         assert np.log10(10) == 1
