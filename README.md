@@ -5,10 +5,9 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 
-The `batread` project is a Python library for reading and parsing 
+The `batread` project is a Python library for reading
 [SWMF/BATSRUS](https://clasp.engin.umich.edu/research/theory-computational-methods/space-weather-modeling-framework/)
-output files in `.dat` and `.plt` format. The library may also be able to read other `.plt` files but only a core subset of the `.plt` format specification is supported. The project also includes a use case in the form of a 'quicklook' command `sw-quick` that can visualise two-dimensional SWMF/BATSRUS output.
-
+output and related Tecplot ASCII `.dat` and binary `.plt` datasets. The project also includes a use case in the form of a quicklook command, `bat-quick`, for visualising two-dimensional SWMF/BATSRUS output.
 
 ## Installation
 After cloning this repository, the project may be installed with `pip` in the regular way:
@@ -43,14 +42,14 @@ To create a quicklook `.png` file from the included file `examples/x=0_var_2_n00
 run
 ```bash
 cd examples
-sw-quick x=0_var_2_n00000000.plt
+bat-quick x=0_var_2_n00000000.plt
 ```
 This will create a file named `ql-x-0-var-2-n00000000-plt-rho-g-cm-3.png`; the name comprises the prefix `ql`, the file name, and the name of the plotted variable. Non-alphanumeric characters are normalised to dashes in the output file name.
 
 A wildcard pattern may be used; in this case one `.png` file is created for each file matching the wildcard pattern:
 
 ```bash
-sw-quick x*.plt
+bat-quick x*.plt
 ```
 
 ## Development and testing

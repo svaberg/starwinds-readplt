@@ -1,6 +1,7 @@
 [project]
 name = "batread"
-description = "Read SWMF/BATSRUS .plt and .dat files"
+description = "Read BATSRUS output and related Tecplot ASCII .dat and binary .plt datasets"
+keywords = ["BATSRUS", "BATS-R-US", "SWMF", "Tecplot", "plt", "dat"]
 version = "1.0"
 dependencies = ["numpy",]
 
@@ -13,4 +14,4 @@ graphics = ["matplotlib",]
 tests = ["pytest", "pytest-console-scripts", "matplotlib",]
 
 [project.scripts]
-sw-quick = "batread.cli_plots:quick_plot"
+bat-quick = "batread.cli_plots:quick_plot"
