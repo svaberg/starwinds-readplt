@@ -3,6 +3,8 @@ name = "batread"
 description = "Read BATSRUS output and related Tecplot ASCII .dat and binary .plt datasets"
 keywords = ["BATSRUS", "BATS-R-US", "SWMF", "Tecplot", "plt", "dat"]
 version = "1.0"
+license = "MIT"
+license-files = ["LICENSE"]
 dependencies = ["numpy",]
 
 [build-system]
