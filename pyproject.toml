@@ -13,7 +13,11 @@ build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
 graphics = ["matplotlib",]
-tests = ["pytest", "pytest-console-scripts", "matplotlib",]
+tests = ["black", "pytest", "pytest-console-scripts", "matplotlib",]
 
 [project.scripts]
 bat-quick = "batread.cli_plots:quick_plot"
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]

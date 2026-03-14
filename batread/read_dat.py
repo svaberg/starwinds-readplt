@@ -2,11 +2,13 @@
 
 import numpy as np
 import logging
+
 log = logging.getLogger(__name__)
 
 
 class LineReader:
     """Line iterator with peek support and line-number tracking."""
+
     def __init__(self, filename):
         self.file = open(filename)
         self.line_no = 0
@@ -17,7 +19,7 @@ class LineReader:
     def __exit__(self, exc_type, exc, tb):
         self.file.close()
         return False
-    
+
     def __iter__(self):
         return self
 
@@ -27,7 +29,7 @@ class LineReader:
             raise StopIteration
         self.line_no += 1
         return line
-    
+
     def peek(self):
         """Return the next line without consuming it."""
         pos = self.file.tell()
@@ -41,7 +43,7 @@ class LineReader:
         if line.startswith(prefix):
             return next(self)
         return None
-    
+
     def loadtxt(self, max_rows, *args, **kwargs):
         """Read numeric rows with numpy and keep line_no in sync."""
         line_no = self.line_no
@@ -83,11 +85,15 @@ def read_dat(filename):
 
         # Read variables
         if (variables := reader.next_if("VARIABLES")) is not None:
-            variables = [v.strip().strip('"') for v in variables.removeprefix("VARIABLES =").split(",")]
+            variables = [
+                v.strip().strip('"')
+                for v in variables.removeprefix("VARIABLES =").split(",")
+            ]
             log.debug(f"Number of variables {len(variables)}.")
         else:
-            raise ValueError(f"Expected variables line starting with 'VARIABLES', got '{reader.peek()}'")
-
+            raise ValueError(
+                f"Expected variables line starting with 'VARIABLES', got '{reader.peek()}'"
+            )
 
         # Read zone title and other things from the zone line
         if (zone_spec := reader.next_if("ZONE")) is not None:
@@ -95,13 +101,16 @@ def read_dat(filename):
             zone = {}
             for item in zone_spec:
                 key, value = item.split("=", 1)
-                zone[key.strip()] = value.strip().strip('"').strip() # Strip whitespace and quotes
+                zone[key.strip()] = (
+                    value.strip().strip('"').strip()
+                )  # Strip whitespace and quotes
             zone_title = zone.get("T", None)
             zone_n = int(zone.get("N"))
             zone_e = int(zone.get("E"))
         else:
-            raise ValueError(f"Expected zone title line starting with 'ZONE', got '{reader.peek()}'")
-
+            raise ValueError(
+                f"Expected zone title line starting with 'ZONE', got '{reader.peek()}'"
+            )
 
         # Read aux data into dict.
         aux = {}
@@ -116,26 +125,40 @@ def read_dat(filename):
         # ---------------------------
 
         # Read point data.
-        log.debug(f"Reading {zone_n} points from file lines {reader.line_no + 1} to {reader.line_no + zone_n}.")
+        log.debug(
+            f"Reading {zone_n} points from file lines {reader.line_no + 1} to {reader.line_no + zone_n}."
+        )
         points = reader.loadtxt(max_rows=zone_n)
         log.debug(f"Finished reading points. Shape is {points.shape}.")
         if points.shape[1] != len(variables):
-            raise ValueError(f"Expected {len(variables)} columns of point data, got {points.shape[1]}.")
+            raise ValueError(
+                f"Expected {len(variables)} columns of point data, got {points.shape[1]}."
+            )
         if points.shape[0] != zone_n:
-            raise ValueError(f"Expected {zone_n} rows of point data, got {points.shape[0]}.")
+            raise ValueError(
+                f"Expected {zone_n} rows of point data, got {points.shape[0]}."
+            )
 
         # Read connectivity.
-        log.debug(f"Reading {zone_e} corners from file lines {reader.line_no + 1} to {reader.line_no + zone_e}.")
+        log.debug(
+            f"Reading {zone_e} corners from file lines {reader.line_no + 1} to {reader.line_no + zone_e}."
+        )
         corners = reader.loadtxt(max_rows=zone_e, dtype=int)
         log.debug(f"Finished reading corners. Shape is {corners.shape}.")
         if corners.shape[0] != zone_e:
-            raise ValueError(f"Expected {zone_e} rows of corner data, got {corners.shape[0]}.")
+            raise ValueError(
+                f"Expected {zone_e} rows of corner data, got {corners.shape[0]}."
+            )
 
         corners = corners - 1  # Index from zero (like in the binary format)
 
         tail = reader.file.read().strip()
         if tail:
-            log.warning(f"File has {len(tail)} extra characters after expected data. Ignoring.")
-            raise ValueError(f"File has {len(tail)} extra characters after expected data. Ignoring.")
+            log.warning(
+                f"File has {len(tail)} extra characters after expected data. Ignoring."
+            )
+            raise ValueError(
+                f"File has {len(tail)} extra characters after expected data. Ignoring."
+            )
 
         return points, corners, aux, title, variables, zone_title

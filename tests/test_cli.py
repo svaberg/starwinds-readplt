@@ -16,7 +16,7 @@ def test_dat_without_title(script_runner, tmp_path):
     """Check that plotting works for .dat files without a TITLE line."""
     datfile = tmp_path / "slice.dat"
     datfile.write_text(
-        '\n'.join(
+        "\n".join(
             [
                 'VARIABLES = "X [R]", "Y [R]", "Z [R]", "Rho [g/cm^3]"',
                 'ZONE T="2D X", N=4, E=1',

@@ -75,7 +75,7 @@ def quick_plot():
         dest="noclobber",
         action="store_true",
         help="Do not overwrite existing files",
-        )
+    )
     parser.add_argument(
         "--identifier",
         dest="identifier",
@@ -124,7 +124,8 @@ def quick_plot():
         plot_callback = fancyplot.plot
 
     png_filenames = [
-        re.sub(r"[^a-z0-9]+", "-", f"ql-{file}-{args.w_name}".lower()).strip("-") + ".png"
+        re.sub(r"[^a-z0-9]+", "-", f"ql-{file}-{args.w_name}".lower()).strip("-")
+        + ".png"
         for file in plt_filenames
     ]
     for file, png_file in zip(plt_filenames, png_filenames):
@@ -132,5 +133,11 @@ def quick_plot():
             log.warning("Skipping existing file %s" % png_file)
             continue
         plot_callback(
-            file, png_file, args.u_name, args.v_name, args.w_name, args.wscale, args.identifier
+            file,
+            png_file,
+            args.u_name,
+            args.v_name,
+            args.w_name,
+            args.wscale,
+            args.identifier,
         )

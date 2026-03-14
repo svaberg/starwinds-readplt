@@ -35,7 +35,7 @@ class Cursor:
         """Advance by n bytes and return the consumed slice."""
         start = self.ptr
         self.ptr += n
-        return self.content[start:self.ptr]
+        return self.content[start : self.ptr]
 
     def read_array(self, dtype, count):
         """Read a NumPy array view and advance by its size in bytes."""
@@ -177,9 +177,7 @@ def read_plt(filename):
         cursor.advance(4)
 
         if cursor.advance(4) != zone_marker:
-            raise ValueError(
-                f"Expected zone marker {ZONE_MARKER} after end of header."
-            )
+            raise ValueError(f"Expected zone marker {ZONE_MARKER} after end of header.")
 
         # Skip reading 24 variable types (float)
         cursor.advance(num_vars * 4)
@@ -218,6 +216,7 @@ def read_plt(filename):
 
         return points, corners, aux, title, variables, zone_name
 
+
 def readstr32(cursor):
     """
     Read a null-terminated 32-bit character string from the cursor.
@@ -227,6 +226,6 @@ def readstr32(cursor):
 
     null_loc = math.ceil(null_loc / 4) * 4
 
-    string = cursor.content[cursor.ptr:null_loc:4].decode("ascii")
+    string = cursor.content[cursor.ptr : null_loc : 4].decode("ascii")
     cursor.advance(null_loc + 4 - cursor.ptr)
     return string

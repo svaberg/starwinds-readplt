@@ -6,6 +6,7 @@ from batread.read_plt import read_plt
 
 class Dataset:
     """In-memory dataset with points, connectivity, and metadata."""
+
     def __init__(self, points, corners, aux, title, variables, zone):
         """Store arrays and metadata for one parsed dataset."""
         self.points = points
@@ -65,12 +66,12 @@ class Dataset:
         raise IndexError(
             f"Variable '{index_or_name}' not in dataset. Available variables are {self.variables}."
         )
-    
+
     def span(self, index_or_name):
         """Calculate the span of a variable; used for coordinate centering"""
         var = self.variable(index_or_name)
         return var.min(), var.max()
-    
+
     def center(self, index_or_name):
         """Calculate the center value of a variable; used for coordinate centering"""
         var = self.variable(index_or_name)
