@@ -50,16 +50,31 @@ class Dataset:
         return cls(points, corners, aux, title, variables, zone)
 
     def _variable(self, index_or_name):
-        """Return one variable by integer index or exact name."""
+        """Return one variable, slice, or list of variables.
+
+        Accepted keys are integer-like indices, exact variable names,
+        integer slices, and lists/tuples of integer-like indices or names.
+        """
+        if isinstance(index_or_name, slice):
+            return self.points[..., index_or_name]
+
+        if isinstance(index_or_name, (list, tuple)):
+            return self.points[
+                ..., [self._variable_index(key) for key in index_or_name]
+            ]
+
+        return self.points[..., self._variable_index(index_or_name)]
+
+    def _variable_index(self, index_or_name):
+        """Return one variable index by integer-like value or exact name."""
         try:
             index = int(index_or_name)
-            return self.points[..., index]
+            return index
         except ValueError:
             pass
 
         try:
-            index = self.variables.index(index_or_name)
-            return self.points[..., index]
+            return self.variables.index(index_or_name)
         except ValueError:
             pass
 
@@ -68,7 +83,7 @@ class Dataset:
         )
 
     def __getitem__(self, index_or_name):
-        """Return one variable by integer index or exact name."""
+        """Return one variable, slice, or list of variables."""
         return self._variable(index_or_name)
 
     def span(self, index_or_name):

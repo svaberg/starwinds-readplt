@@ -21,6 +21,24 @@ def test_read_variables():
     assert len(rho) > 0
 
 
+def test_read_variable_slice():
+    """Verify integer slices return a variable block."""
+    ds = Dataset.from_dat("examples/x=0_var_2_n00000000.dat")
+
+    xyz = ds[0:3]
+    assert xyz.shape == (ds.points.shape[0], 3)
+    assert np.allclose(xyz, ds.points[:, 0:3])
+
+
+def test_read_variable_list():
+    """Verify lists of variable names return the selected block."""
+    ds = Dataset.from_dat("examples/x=0_var_2_n00000000.dat")
+
+    xyz = ds[["X [R]", "Y [R]", "Z [R]"]]
+    assert xyz.shape == (ds.points.shape[0], 3)
+    assert np.allclose(xyz, ds.points[:, 0:3])
+
+
 def example_files(folder="examples"):
     """Return all example .dat and .plt files."""
     plt_files = glob.glob(f"{folder}/*.plt")
