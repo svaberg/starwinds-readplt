@@ -2,34 +2,19 @@
 
 This project is intended for PyPI distribution. Only committed state should be considered shippable.
 
-## Blockers Before Release
-
-1. Replace format-validation `assert` statements in `batread/read_plt.py` with explicit exceptions.
-   A public parser should fail with clear errors even when Python assertions are disabled.
-
 ## Completed
 
 1. Keep missing `TITLE=` represented as `None` from `batread/read_dat.py`.
 2. Make plotting robust to missing titles in `batread/basicplot.py`.
 3. Add a CLI smoke test for plotting a title-less `.dat` file in `tests/test_cli.py`.
-
-## Packaging Metadata
-
-1. Add `readme` metadata in `pyproject.toml`.
-2. Add `requires-python` in `pyproject.toml`.
-3. Add author and/or maintainer metadata in `pyproject.toml`.
-4. Add project URLs in `pyproject.toml`.
-   At minimum: repository, issues, and homepage if distinct.
-5. Add classifiers in `pyproject.toml`.
-6. Avoid version drift between `pyproject.toml` and `batread/__init__.py`.
+4. Replace format-validation `assert` statements in `batread/read_plt.py` with explicit exceptions.
+5. Add PyPI-facing metadata to `pyproject.toml`.
+6. Update the README links to use the `batread` repository.
+7. Update the GitHub workflow coverage target to use `batread`.
 
 ## Repository Cleanup
 
-1. Update rename leftovers in `README.md`.
-   The badges and links still point to `starwinds-readplt`.
-2. Update rename leftovers in `.github/workflows/python-package.yml`.
-   Coverage is still collected against `starwinds_readplt`.
-3. Decide whether `batread/read_plt_ondemand.py` should ship.
+1. Decide whether `batread/read_plt_ondemand.py` should ship.
    It is explicitly experimental and incomplete; either remove it from the published surface or finish it.
 
 ## Release Verification

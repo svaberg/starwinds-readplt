@@ -1,10 +1,23 @@
 [project]
 name = "batread"
 description = "Read BATSRUS output and related Tecplot ASCII .dat and binary .plt datasets"
+readme = "README.md"
+requires-python = ">=3.9"
 keywords = ["BATSRUS", "BATS-R-US", "SWMF", "Tecplot", "plt", "dat"]
 version = "1.0"
 license = "MIT"
 license-files = ["LICENSE"]
+authors = [{ name = "Dag Evensberget", email = "dag.evensberget@gmail.com" }]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+urls = { Repository = "https://github.com/svaberg/batread", Issues = "https://github.com/svaberg/batread/issues" }
 dependencies = ["numpy",]
 
 [build-system]
