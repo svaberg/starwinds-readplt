@@ -24,7 +24,7 @@ pip install .[graphics]
 ## Python code to access file data
 This code reads a dataset named `<file>` and stores the dataset variable named `Rho [g/cm^3]` in a local variable named `density_g_cm3`.
 ```python
-from batread.dataset import Dataset
+from batread import Dataset
 ds = Dataset.from_file('<file>')
 print(ds)
 density_g_cm3 = ds('Rho [g/cm^3]')

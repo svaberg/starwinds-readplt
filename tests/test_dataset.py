@@ -2,7 +2,7 @@
 
 import numpy as np
 import glob
-from batread.dataset import Dataset
+from batread import Dataset
 
 import pytest
 
