@@ -1,0 +1,9 @@
+name: batread
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - numpy
+  - matplotlib
+  - pytest
+  - pytest-console-scripts

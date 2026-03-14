@@ -62,10 +62,12 @@ def plot(file, pngfile, u_name, v_name, w_name, wscale, identifier=None):
     cax = plt.colorbar(img)
     cax.set_label(w_name)
 
-    _title = ds.title + "\n" + str(file) + " " + ds.zone
+    title_lines = [f"{file} {ds.zone}"]
+    if ds.title is not None:
+        title_lines.insert(0, ds.title)
     if identifier is not None:
-        _title = _title + "\n" + str(identifier)
-    ax.set_title(_title)
+        title_lines.append(str(identifier))
+    ax.set_title("\n".join(title_lines))
 
     ax.set_xlabel(u_name)
     ax.set_ylabel(v_name)
