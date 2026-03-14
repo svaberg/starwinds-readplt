@@ -1,6 +1,6 @@
 [![Python package](https://github.com/svaberg/batread/actions/workflows/python-package.yml/badge.svg)](https://github.com/svaberg/batread/actions/workflows/python-package.yml)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/6236f7130d7f4b0caab5ee221430e74b)](https://www.codacy.com/gh/svaberg/batread/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=svaberg/batread&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/6236f7130d7f4b0caab5ee221430e74b)](https://www.codacy.com/gh/svaberg/batread/dashboard?utm_source=github.com&utm_medium=referral&utm_content=svaberg/batread&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/6236f7130d7f4b0caab5ee221430e74b)](https://app.codacy.com/gh/svaberg/batread/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=svaberg/batread&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/6236f7130d7f4b0caab5ee221430e74b)](https://app.codacy.com/gh/svaberg/batread/dashboard?utm_source=github.com&utm_medium=referral&utm_content=svaberg/batread&utm_campaign=Badge_Coverage)
 [![DOI](https://zenodo.org/badge/550311707.svg)](https://zenodo.org/badge/latestdoi/550311707)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
