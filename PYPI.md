@@ -35,4 +35,4 @@ A wildcard pattern may be used; in this case one `.png` file is created for each
 bat-quick x*.plt
 ```
 
-Example files and repository-oriented examples are available in the [GitHub repository](https://github.com/svaberg/batread/tree/master/examples). They are not included in the PyPI wheel.
+Further code examples and data files are available in the [GitHub repository](https://github.com/svaberg/batread/tree/master/sample_data).

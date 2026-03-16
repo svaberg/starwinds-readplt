@@ -10,13 +10,10 @@ The `batread` project is a Python library for reading
 output and related Tecplot ASCII `.dat` and binary `.plt` datasets. The project also includes a use case in the form of a quicklook command, `bat-quick`, for visualising two-dimensional SWMF/BATSRUS output.
 
 ## Installation
-After cloning this repository, the project may be installed with `pip` in the regular way:
+The project may be installed with `pip` in the regular way:
 ```bash
-cd <project>
-pip install .
+pip install batread
 ```
-
-This installs the reader functionality only. The quicklook plotting command requires `matplotlib`.
 
 ## Python code to access file data
 This code reads a dataset named `<file>` and stores the dataset variable named `Rho [g/cm^3]` in a local variable named `density_g_cm3`.
@@ -32,10 +29,10 @@ A simple 'quicklook' shell command is included which permits plotting of two-dim
 
 The quicklook command requires `matplotlib`.
 
-To create a quicklook `.png` file from the included file `examples/x=0_var_2_n00000000.plt`
+To create a quicklook `.png` file from the included file `sample_data/x=0_var_2_n00000000.plt`
 run
 ```bash
-cd examples
+cd sample_data
 bat-quick x=0_var_2_n00000000.plt
 ```
 This will create a file named `ql-x-0-var-2-n00000000-plt-rho-g-cm-3.png`; the name comprises the prefix `ql`, the file name, and the name of the plotted variable. Non-alphanumeric characters are normalised to dashes in the output file name.
