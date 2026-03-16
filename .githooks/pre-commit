@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Check formatting of staged Python files before commit.
+set -eu
+
+files=$(git diff --cached --name-only --diff-filter=ACMR -- '*.py')
+
+if [ -z "$files" ]; then
+    exit 0
+fi
+
+conda run -n batread black --check $files

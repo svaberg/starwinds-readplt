@@ -4,12 +4,12 @@ from pathlib import Path
 
 import pytest
 
-
 SAMPLE_DATA_DIR = Path("sample_data")
 
 
 def sample_path(filename):
     """Return the path to one sample data file."""
+
     return str(SAMPLE_DATA_DIR / filename)
 
 
@@ -32,9 +32,11 @@ def sample_pairs():
 
 def with_sample_files(test):
     """Parametrize a test over all sample .dat and .plt files."""
+
     return pytest.mark.parametrize("file", sample_files())(test)
 
 
 def with_sample_pairs(test):
     """Parametrize a test over matched sample (.dat, .plt) file pairs."""
+
     return pytest.mark.parametrize(("dat_file", "plt_file"), sample_pairs())(test)
