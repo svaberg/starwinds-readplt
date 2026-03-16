@@ -1,4 +1,4 @@
-"""Reader-level comparisons and timing checks for 2D examples."""
+"""Reader-level comparisons and timing checks for 2D sample data."""
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,13 +20,13 @@ def catchtime() -> float:
 
 def test_read():
     """Ensure .dat and .plt readers return matching 2D arrays."""
-    filename = "examples/x=0_var_2_n00000000.dat"
+    filename = "sample_data/x=0_var_2_n00000000.dat"
     dpoints, dcorners, *_ = read_dat(filename)
     # print(dpoints.shape)
     # print(dcorners.shape)
     # print(dpoints)
 
-    filename = "examples/x=0_var_2_n00000000.plt"
+    filename = "sample_data/x=0_var_2_n00000000.plt"
     points, corners, *_ = read_plt(filename)
     # print(points.shape)
     # print(corners.shape)
@@ -38,7 +38,7 @@ def test_read():
 
 def test_timing():
     """Exercise a read-triangulate-plot workflow for performance sanity."""
-    filename = "examples/x=0_var_2_n00000000.plt"
+    filename = "sample_data/x=0_var_2_n00000000.plt"
 
     with catchtime() as t:
         points, corners, *_ = read_plt(filename)

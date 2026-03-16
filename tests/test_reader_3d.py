@@ -1,4 +1,4 @@
-"""Reader-level regression tests for 3D examples."""
+"""Reader-level regression tests for 3D sample data."""
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,7 +20,11 @@ def catchtime() -> float:
 
 
 @pytest.mark.parametrize(
-    "filename", ("examples/3d__var_1_n00000000.dat", "examples/3d__var_1_n00000000.plt")
+    "filename",
+    (
+        "sample_data/3d__var_1_n00000000.dat",
+        "sample_data/3d__var_1_n00000000.plt",
+    ),
 )
 def test_read_3d(filename):
     """Verify basic shape and indexing invariants for 3D data."""
@@ -40,10 +44,10 @@ def test_read_3d(filename):
 
 def test_compare_dat_and_plt():
     """Check that 3D .dat and .plt decoding results match."""
-    filename = "examples/3d__var_1_n00000000.dat"
+    filename = "sample_data/3d__var_1_n00000000.dat"
     dpoints, dcorners, daux, dtitle, dvariables, dzone_name = read_dat(filename)
 
-    filename = "examples/3d__var_1_n00000000.plt"
+    filename = "sample_data/3d__var_1_n00000000.plt"
     points, corners, aux, title, variables, zone_name = read_plt(filename)
 
     assert daux == aux
@@ -57,7 +61,7 @@ def test_compare_dat_and_plt():
 
 def test_3d_point_cloud():
     """Generate a basic multi-view point-cloud diagnostic figure."""
-    filename = "examples/3d__var_1_n00000000.plt"
+    filename = "sample_data/3d__var_1_n00000000.plt"
 
     with catchtime() as t:
         points, corners, *_ = read_plt(filename)
