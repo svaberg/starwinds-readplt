@@ -24,6 +24,9 @@ dependencies = ["numpy",]
 requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+packages = ["batread"]
+
 [project.optional-dependencies]
 graphics = ["matplotlib",]
 tests = ["black", "pytest", "pytest-console-scripts", "matplotlib",]
