@@ -8,6 +8,7 @@ from contextlib import contextmanager
 
 from batread.read_dat import read_dat
 from batread.read_plt import read_plt
+from conftest import sample_path
 
 import pytest
 
@@ -21,10 +22,7 @@ def catchtime() -> float:
 
 @pytest.mark.parametrize(
     "filename",
-    (
-        "sample_data/3d__var_1_n00000000.dat",
-        "sample_data/3d__var_1_n00000000.plt",
-    ),
+    (sample_path("3d__var_1_n00000000.dat"), sample_path("3d__var_1_n00000000.plt")),
 )
 def test_read_3d(filename):
     """Verify basic shape and indexing invariants for 3D data."""
@@ -44,10 +42,10 @@ def test_read_3d(filename):
 
 def test_compare_dat_and_plt():
     """Check that 3D .dat and .plt decoding results match."""
-    filename = "sample_data/3d__var_1_n00000000.dat"
+    filename = sample_path("3d__var_1_n00000000.dat")
     dpoints, dcorners, daux, dtitle, dvariables, dzone_name = read_dat(filename)
 
-    filename = "sample_data/3d__var_1_n00000000.plt"
+    filename = sample_path("3d__var_1_n00000000.plt")
     points, corners, aux, title, variables, zone_name = read_plt(filename)
 
     assert daux == aux
@@ -61,7 +59,7 @@ def test_compare_dat_and_plt():
 
 def test_3d_point_cloud():
     """Generate a basic multi-view point-cloud diagnostic figure."""
-    filename = "sample_data/3d__var_1_n00000000.plt"
+    filename = sample_path("3d__var_1_n00000000.plt")
 
     with catchtime() as t:
         points, corners, *_ = read_plt(filename)

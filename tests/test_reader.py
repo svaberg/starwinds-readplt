@@ -9,6 +9,7 @@ from contextlib import contextmanager
 
 from batread.read_dat import read_dat
 from batread.read_plt import read_plt
+from conftest import sample_path, with_sample_pairs
 
 
 @contextmanager
@@ -18,16 +19,15 @@ def catchtime() -> float:
     yield lambda: perf_counter() - start
 
 
-def test_read():
-    """Ensure .dat and .plt readers return matching 2D arrays."""
-    filename = "sample_data/x=0_var_2_n00000000.dat"
-    dpoints, dcorners, *_ = read_dat(filename)
+@with_sample_pairs
+def test_read(dat_file, plt_file):
+    """Ensure .dat and .plt readers return matching arrays."""
+    dpoints, dcorners, *_ = read_dat(dat_file)
     # print(dpoints.shape)
     # print(dcorners.shape)
     # print(dpoints)
 
-    filename = "sample_data/x=0_var_2_n00000000.plt"
-    points, corners, *_ = read_plt(filename)
+    points, corners, *_ = read_plt(plt_file)
     # print(points.shape)
     # print(corners.shape)
     # print(points)
@@ -38,7 +38,7 @@ def test_read():
 
 def test_timing():
     """Exercise a read-triangulate-plot workflow for performance sanity."""
-    filename = "sample_data/x=0_var_2_n00000000.plt"
+    filename = sample_path("x=0_var_2_n00000000.plt")
 
     with catchtime() as t:
         points, corners, *_ = read_plt(filename)
