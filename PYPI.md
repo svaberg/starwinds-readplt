@@ -1,48 +1,46 @@
-# batread
-
-`batread` is a Python library for reading SWMF/BATSRUS output and related
-Tecplot ASCII `.dat` and binary `.plt` datasets.
-
-The package also provides a quicklook command, `bat-quick`, for visualising
-two-dimensional SWMF/BATSRUS output.
+The `batread` project is a Python library for reading
+[SWMF/BATSRUS](https://clasp.engin.umich.edu/research/theory-computational-methods/space-weather-modeling-framework/)
+output and related Tecplot ASCII `.dat` and binary `.plt` datasets. The project also includes a use case in the form of a quicklook command, `bat-quick`, for visualising two-dimensional SWMF/BATSRUS output.
 
 ## Installation
-
-Install the reader with:
-
+The project may be installed with `pip` in the regular way:
 ```bash
 pip install batread
 ```
 
-To use the quicklook plotting command, install the graphics extra:
-
+This installs the reader functionality only. To use the quicklook plotting command, install the graphics extra:
 ```bash
 pip install "batread[graphics]"
 ```
 
-## Python usage
-
+## Python code to access file data
+This code reads a dataset named `<file>` and stores the dataset variable named `Rho [g/cm^3]` in a local variable named `density_g_cm3`.
 ```python
 from batread import Dataset
-
-ds = Dataset.from_file("your-file.plt")
+ds = Dataset.from_file('<file>')
 print(ds)
-
-rho = ds["Rho [g/cm^3]"]
-xyz = ds[["X [R]", "Y [R]", "Z [R]"]]
+density_g_cm3 = ds['Rho [g/cm^3]']
 ```
 
-## Quicklook usage
+## Running the quicklook command
+A simple 'quicklook' shell command is included which permits plotting of two-dimensional slices of the SWMF/BATSRUS results. Irregularly gridded data is accepted. The quicklook command uses the plot function in `basicplot.py` but this may be extended by the user.
 
-After installing the graphics extra, run:
+The quicklook command requires the graphics extra:
+```bash
+pip install "batread[graphics]"
+```
 
+To create a quicklook `.png` file from a `.plt` file
+run
 ```bash
 bat-quick your-file.plt
 ```
+This will create a `.png` file; the file name comprises the prefix `ql`, the file name, and the name of the plotted variable. Non-alphanumeric characters are normalised to dashes in the output file name.
 
-This creates a `.png` quicklook image for the selected variable.
+A wildcard pattern may be used; in this case one `.png` file is created for each file matching the wildcard pattern:
 
-## Example data
+```bash
+bat-quick x*.plt
+```
 
-Example files and repository-oriented examples live in the GitHub repository.
-They are not included in the PyPI wheel.
+Example files and repository-oriented examples live in the GitHub repository. They are not included in the PyPI wheel.
