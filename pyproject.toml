@@ -1,7 +1,7 @@
 [project]
 name = "batread"
 description = "Read BATSRUS output and related Tecplot ASCII .dat and binary .plt datasets"
-readme = "README.md"
+readme = "PYPI.md"
 requires-python = ">=3.9"
 keywords = ["BATSRUS", "BATS-R-US", "SWMF", "Tecplot", "plt", "dat"]
 version = "1.1.0"
