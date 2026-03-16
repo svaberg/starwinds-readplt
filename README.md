@@ -16,10 +16,7 @@ cd <project>
 pip install .
 ```
 
-This installs the reader functionality only. To use the quicklook plotting command, install the graphics extra:
-```bash
-pip install .[graphics]
-```
+This installs the reader functionality only. The quicklook plotting command requires `matplotlib`.
 
 ## Python code to access file data
 This code reads a dataset named `<file>` and stores the dataset variable named `Rho [g/cm^3]` in a local variable named `density_g_cm3`.
@@ -33,10 +30,7 @@ density_g_cm3 = ds['Rho [g/cm^3]']
 ## Running the quicklook command
 A simple 'quicklook' shell command is included which permits plotting of two-dimensional slices of the SWMF/BATSRUS results. Irregularly gridded data is accepted. The quicklook command uses the plot function in `basicplot.py` but this may be extended by the user.
 
-The quicklook command requires the graphics extra:
-```bash
-pip install .[graphics]
-```
+The quicklook command requires `matplotlib`.
 
 To create a quicklook `.png` file from the included file `examples/x=0_var_2_n00000000.plt`
 run
